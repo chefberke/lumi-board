@@ -11,17 +11,14 @@ function Nav() {
       </Link>
       <div>
         <ul className="flex items-center gap-8">
-          <li className="text-neutral-900 hover:text-neutral-700 hover:cursor-pointer transition-all">
-            Features
+          <li className="text-neutral-900 hover:text-neutral-700 hover:cursor-pointer transition-all font-medium">
+            <Link href={"/team"}>Team</Link>
           </li>
-          <li className="text-neutral-900 hover:text-neutral-700 hover:cursor-pointer transition-all">
-            Pricing
+          <li className="text-neutral-900 hover:text-neutral-700 hover:cursor-pointer transition-all font-medium">
+            <Link href={"/changelog"}>Changelog</Link>
           </li>
-          <li className="text-neutral-900 hover:text-neutral-700 hover:cursor-pointer transition-all">
-            Team
-          </li>
-          <li className="bg-primary text-white px-4 py-2 rounded-xl">
-            Start Now!
+          <li className="bg-primary text-white px-4 py-1.5 rounded-2xl transition-all hover:scale-105 hover:cursor-pointer hover:-translate-y-0.5 font-medium">
+            <Link href={"/start-now"}>Start Now!</Link>
           </li>
         </ul>
       </div>
