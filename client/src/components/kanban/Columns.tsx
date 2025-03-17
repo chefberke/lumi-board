@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { InitialData } from "@/components/landing/kanban/InitialData";
-import Items from "@/components/landing/kanban/Items";
+import { InitialData } from "@/components/kanban/InitialData";
+import Items from "@/components/kanban/Items";
 import {
   DragDropContext,
   Droppable,

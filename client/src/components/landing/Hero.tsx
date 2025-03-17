@@ -1,5 +1,5 @@
 import React from "react";
-import Columns from "./kanban/Columns";
+import Columns from "@/components/kanban/Columns";
 
 export default function Hero() {
   return (
