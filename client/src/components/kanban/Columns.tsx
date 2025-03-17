@@ -69,7 +69,7 @@ export default function KanbanBoard() {
         {columns.map((column) => (
           <div
             key={column.id}
-            className="flex-shrink-0 w-72 bg-gray-50/50 rounded-lg shadow-sm border border-gray-100/30 backdrop-blur-sm flex flex-col h-[400px]"
+            className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-72 h-[400px]"
             style={{ position: "relative", zIndex: 1 }}
           >
             <div className="p-3 border-b border-gray-100/30">
