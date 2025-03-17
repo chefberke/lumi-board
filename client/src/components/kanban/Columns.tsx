@@ -72,8 +72,10 @@ export default function KanbanBoard() {
             className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-72 h-[400px]"
             style={{ position: "relative", zIndex: 1 }}
           >
-            <div className="p-3 border-b border-gray-100/30">
-              <h3 className="font-medium text-gray-700">{column.title}</h3>
+            <div className="p-2 border-b border-gray-100/30">
+              <h3 className="pt-1.5 font-medium text-gray-700">
+                {column.title}
+              </h3>
             </div>
             <Droppable droppableId={column.id.toString()}>
               {(provided: DroppableProvided) => (

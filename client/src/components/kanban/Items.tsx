@@ -23,9 +23,9 @@ function Items({ card, index }: CardProps) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={`mb-2 p-3 bg-white rounded-md shadow-sm border border-gray-100/50 hover:shadow-md transition-all cursor-grab active:cursor-grabbing ${
+            className={`mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing ${
               snapshot.isDragging
-                ? "shadow-lg ring-2 ring-blue-500/50 opacity-100 backdrop-blur-md"
+                ? "shadow-lg ring-2 ring-primary opacity-100 backdrop-blur-md"
                 : ""
             }`}
             style={{
