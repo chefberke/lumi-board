@@ -7,6 +7,7 @@ import {
   DragDropContext,
   Droppable,
   DroppableProvided,
+  Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
 
@@ -14,9 +15,19 @@ export default function KanbanBoard() {
   const [columns, setColumns] = useState(InitialData.columns);
 
   const onDragEnd = (result: DropResult) => {
-    const { source, destination } = result;
+    const { source, destination, type } = result;
     if (!destination) return;
 
+    // Handle column reordering
+    if (type === "column") {
+      const newColumns = Array.from(columns);
+      const [movedColumn] = newColumns.splice(source.index, 1);
+      newColumns.splice(destination.index, 0, movedColumn);
+      setColumns(newColumns);
+      return;
+    }
+
+    // Handle card reordering within the same column
     if (source.droppableId === destination.droppableId) {
       const column = columns.find(
         (col) => col.id.toString() === source.droppableId
@@ -34,6 +45,7 @@ export default function KanbanBoard() {
       );
       setColumns(newColumns);
     } else {
+      // Handle card movement between columns
       const sourceColumn = columns.find(
         (col) => col.id.toString() === source.droppableId
       );
@@ -62,39 +74,55 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div
-        className="flex gap-4 p-4 min-h-[400px]"
-        style={{ position: "relative", zIndex: 1 }}
-      >
-        {columns.map((column) => (
+      <Droppable droppableId="columns" direction="horizontal" type="column">
+        {(provided) => (
           <div
-            key={column.id}
-            className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-72 h-[400px]"
-            style={{ position: "relative", zIndex: 1 }}
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="flex gap-4 p-4 min-h-[400px]"
           >
-            <div className="p-2 border-b border-gray-100/30">
-              <h3 className="pt-1.5 font-medium text-gray-700">
-                {column.title}
-              </h3>
-            </div>
-            <Droppable droppableId={column.id.toString()}>
-              {(provided: DroppableProvided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                  className="p-2 overflow-y-auto scrollbar-hide flex-1"
-                  style={{ position: "relative", zIndex: 1 }}
-                >
-                  {column.cards.map((card, index) => (
-                    <Items key={card.id} card={card} index={index} />
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
+            {columns.map((column, index) => (
+              <Draggable
+                key={column.id}
+                draggableId={`column-${column.id}`}
+                index={index}
+              >
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-72 h-[350px] flex flex-col"
+                  >
+                    <div
+                      {...provided.dragHandleProps}
+                      className="p-2 border-b border-gray-100/30 cursor-grab active:cursor-grabbing"
+                    >
+                      <h3 className="pt-1.5 font-medium text-gray-700">
+                        {column.title}
+                      </h3>
+                    </div>
+                    <Droppable droppableId={column.id.toString()} type="card">
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className="p-2 overflow-y-auto flex-1 no-scrollbar"
+                        >
+                          {column.cards.map((card, index) => (
+                            <Items key={card.id} card={card} index={index} />
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
           </div>
-        ))}
-      </div>
+        )}
+      </Droppable>
     </DragDropContext>
   );
 }

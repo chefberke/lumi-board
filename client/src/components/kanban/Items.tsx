@@ -31,7 +31,7 @@ function Items({ card, index }: CardProps) {
             style={{
               ...provided.draggableProps.style,
               opacity: snapshot.isDragging ? 0.9 : 1,
-              zIndex: snapshot.isDragging ? 9999 : 9999,
+              zIndex: snapshot.isDragging ? 1000 : 1,
             }}
           >
             <h4 className="font-medium text-gray-800 mb-1">{card.title}</h4>
