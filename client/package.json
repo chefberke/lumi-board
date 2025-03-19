@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.9",
+    "bcryptjs": "^3.0.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
     "next": "15.2.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
