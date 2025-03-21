@@ -7,7 +7,7 @@ function Nav() {
   return (
     <div className="flex items-center justify-between w-full h-24">
       <Link href={"/"}>
-        <Image src={Logo} width={100} height={100} alt="Logo" />
+        <Image src={Logo} width={85} height={85} alt="Logo" />
       </Link>
       <div>
         <ul className="flex items-center gap-8">

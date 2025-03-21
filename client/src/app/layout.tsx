@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
-import Nav from "@/components/landing/Nav";
-import Footer from "@/components/landing/Footer";
 
 const poppins = Nunito({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
@@ -21,13 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
+      </head>
       <body
         className={`flex items-center justify-center h-screen w-full ${poppins.className}`}
       >
         <div className="flex flex-col h-full w-full max-w-[1100px]">
-          <Nav />
           {children}
-          <Footer />
         </div>
       </body>
     </html>
