@@ -25,7 +25,7 @@ function Page() {
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError("Error");
+        setError("Something went wrong");
       }
     }
   }
