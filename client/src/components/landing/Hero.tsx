@@ -9,7 +9,7 @@ export default function Hero() {
       </div>
       <div className="w-full h-full flex flex-col items-center justify-center relative">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="text-center text-7xl font-black">
+          <h2 className="text-center text-7xl max-sm:text-5xl font-black">
             <span className="bg-gradient-to-r from-primary to-black bg-clip-text text-transparent">
               A more humane <br />
             </span>{" "}
