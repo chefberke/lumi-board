@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
 
-const poppins = Nunito({
+const font = Nunito({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
@@ -23,7 +23,7 @@ export default function RootLayout({
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head>
       <body
-        className={`flex items-center justify-center h-screen w-full ${poppins.className}`}
+        className={`flex items-center justify-center h-screen w-full ${font.className}`}
       >
         <div className="flex flex-col h-full w-full max-w-[1100px]">
           {children}
