@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
             { status: 200 }
         );
 
-        response.cookies.set('token', '', {
+        response.cookies.set('jwt', '', {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
