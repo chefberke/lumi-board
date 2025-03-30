@@ -79,7 +79,7 @@ export default function KanbanBoard() {
           <div
             ref={provided.innerRef}
             {...provided.droppableProps}
-            className="flex gap-4 p-4 min-h-[400px]"
+            className="flex flex-col md:flex-row gap-4 p-4 min-h-[400px] overflow-x-auto custom-scrollbar"
           >
             {columns.map((column, index) => (
               <Draggable
@@ -91,7 +91,7 @@ export default function KanbanBoard() {
                   <div
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-72 h-[350px] flex flex-col"
+                    className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-full md:w-72 min-w-[300px] mb-4 md:mb-0 h-auto md:h-[350px] flex flex-col"
                   >
                     <div
                       {...provided.dragHandleProps}
@@ -106,7 +106,7 @@ export default function KanbanBoard() {
                         <div
                           ref={provided.innerRef}
                           {...provided.droppableProps}
-                          className="p-2 overflow-y-auto flex-1 no-scrollbar"
+                          className="p-2 overflow-y-auto flex-1 custom-scrollbar"
                         >
                           {column.cards.map((card, index) => (
                             <Items key={card.id} card={card} index={index} />
