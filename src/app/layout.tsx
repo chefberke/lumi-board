@@ -22,13 +22,7 @@ export default function RootLayout({
       <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head>
-      <body
-        className={`flex items-center justify-center h-screen w-full ${font.className}`}
-      >
-        <div className="flex flex-col h-full w-full max-w-[1100px]">
-          {children}
-        </div>
-      </body>
+      <body className={` ${font.className}`}>{children}</body>
     </html>
   );
 }
