@@ -1,9 +1,8 @@
-import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
+import { Calendar, Home, Inbox } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -11,9 +10,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
 
+import Image from "next/image";
 import Logo from "@/assets/logo.svg";
+import SidebarFooters from "./sidebar-footer";
 
 // Menu items.
 const items = [
@@ -59,18 +59,7 @@ export function AppSidebar() {
         </SidebarGroupContent>
       </SidebarContent>
 
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <a href="#">
-                <User />
-                <span>Profile</span>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
+      <SidebarFooters />
     </Sidebar>
   );
 }
