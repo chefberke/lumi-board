@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import SidebarFooters from "./sidebar-footer";
+import Workspaces from "@/components/ui/workspaces";
 
 // Menu items.
 const items = [
@@ -73,6 +74,8 @@ export function AppSidebar() {
             })}
           </SidebarMenu>
         </SidebarGroupContent>
+
+        <Workspaces />
       </SidebarContent>
 
       <SidebarFooters />
