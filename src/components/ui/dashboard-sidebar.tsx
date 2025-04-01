@@ -1,4 +1,8 @@
+"use client";
+
 import { Calendar, Home, Inbox } from "lucide-react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 import {
   Sidebar,
@@ -24,17 +28,19 @@ const items = [
   },
   {
     title: "Inbox",
-    url: "/inbox",
+    url: "/dashboard/inbox",
     icon: Inbox,
   },
   {
     title: "Calendar",
-    url: "/calendar",
+    url: "/dashboard/calendar",
     icon: Calendar,
   },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
+
   return (
     <Sidebar className="p-4">
       <SidebarContent>
@@ -45,16 +51,26 @@ export function AppSidebar() {
         <SidebarGroupLabel>Overview</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            {items.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <a href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </a>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            {items.map((item) => {
+              const isActive = pathname === item.url;
+              return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link
+                      href={item.url}
+                      className={`flex items-center gap-2 w-full p-2 rounded-md transition-all ${
+                        isActive
+                          ? "bg-neutral-100 text-neutral-900"
+                          : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                      }`}
+                    >
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarContent>
