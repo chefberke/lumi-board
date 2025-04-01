@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema(
         required: true,
         trim: true,
       },
+      projects: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project'
+      }],
     },
     {
       timestamps: true,
