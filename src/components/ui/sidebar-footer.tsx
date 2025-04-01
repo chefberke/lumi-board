@@ -94,17 +94,25 @@ function SidebarFooters() {
                       height={80}
                     />
                     <div className="flex flex-col">
-                      <p className="pt-4 text-xs text-neutral-500">
-                        Id :{data?.user?._id || "****************"}
-                      </p>
-                      <p className="pt-0.5 text-neutral-800 text-lg font-semibold">
-                        @{data?.user?.username}
-                      </p>
+                      <div className="flex flex-col items-start justify-start pt-1">
+                        <div className="text-neutral-500 text-sm">
+                          Username:
+                        </div>
+                        <div className="text-neutral-800 pt-0.5">
+                          @{data?.user?.username || "user"}
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-start justify-start pt-1">
+                        <div className="text-neutral-500 text-sm">Email:</div>
+                        <div className="text-neutral-800 pt-0.5">
+                          {data?.user?.email || "lumiworks@info.com"}
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <DialogFooter>
                     <Button variant="default" size={"sm"} onClick={signOutFunc}>
-                      Sign Out
+                      Logout
                     </Button>
                   </DialogFooter>
                 </DialogContent>
