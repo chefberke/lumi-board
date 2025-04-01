@@ -16,10 +16,10 @@ function Page() {
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const confirmPassword = formData.get("password-confirm") as string;
+    const username = formData.get("username") as string;
 
     try {
-      await signUp({ email, password, confirmPassword });
+      await signUp({ email, password, username });
       router.push("/sign-in");
     } catch (error) {
       if (error instanceof Error) {
@@ -46,7 +46,13 @@ function Page() {
           <form onSubmit={handleSignup} className="px-14">
             <input
               type="text"
+              name="username"
+              placeholder="Username"
+              className="bg-gray-100 text-[14px] rounded-md px-4 w-full h-[2.8rem] focus:outline-[#4B4EE7] mb-2 placeholder:text-[15px]"
+            />
+            <input
               name="email"
+              type="text"
               placeholder="Email"
               className="bg-gray-100 text-[14px] rounded-md px-4 w-full h-[2.8rem] focus:outline-[#4B4EE7] mb-2 placeholder:text-[15px]"
             />
@@ -54,12 +60,6 @@ function Page() {
               name="password"
               type="password"
               placeholder="Password"
-              className="bg-gray-100 text-[14px] rounded-md px-4 w-full h-[2.8rem] focus:outline-[#4B4EE7] mb-2 placeholder:text-[15px]"
-            />
-            <input
-              name="password-confirm"
-              type="password"
-              placeholder="Confirm Password"
               className="bg-gray-100 text-[14px] rounded-md px-4 w-full h-[2.8rem] focus:outline-[#4B4EE7] mb-2 placeholder:text-[15px]"
             />
             <div>

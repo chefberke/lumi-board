@@ -3,7 +3,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 interface SignUpData {
   email: string;
   password: string;
-  confirmPassword: string;
+  username: string;
 }
 
 interface SignInData {
