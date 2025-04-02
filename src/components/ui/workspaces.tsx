@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/sidebar";
 import CreateWorkspace from "@/components/ui/create-workspace";
 import { getWorkspaces } from "@/stores/getWorkspace";
+import { workspaceEvents } from "@/stores/createWorkspace";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Workspace } from "@/types/workspace";
 import { usePathname } from "next/navigation";
-import { File } from "lucide-react";
+import { Folder } from "lucide-react";
 import Link from "next/link";
 
 function workspaces() {
@@ -29,6 +30,11 @@ function workspaces() {
       await fetchData();
     };
     fetchAllWorkspaces();
+
+    workspaceEvents.onWorkspaceCreated = fetchAllWorkspaces;
+    return () => {
+      workspaceEvents.onWorkspaceCreated = null;
+    };
   }, [fetchData]);
 
   if (loading) {
@@ -43,8 +49,6 @@ function workspaces() {
         "An error occurred while loading projects. Please try again later.",
     });
   }
-
-  console.log(data);
 
   return (
     <SidebarContent>
@@ -68,7 +72,7 @@ function workspaces() {
                           isActive ? "bg-gray-100" : ""
                         }`}
                       >
-                        <File />
+                        <Folder />
                         <p>{workspace.title || "Unkown"}</p>
                       </Link>
                     </SidebarMenuButton>

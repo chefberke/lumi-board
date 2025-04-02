@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "@/styles/globals.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = Nunito({
   weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
@@ -19,10 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
-      </head>
-      <body className={` ${font.className}`}>{children}</body>
+      </head> */}
+      <body className={` ${font.className}`}>
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }
