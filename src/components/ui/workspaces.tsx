@@ -61,13 +61,13 @@ function workspaces() {
           {data && data?.workspaces?.length > 0
             ? data?.workspaces.map((workspace: Workspace) => {
                 const isActive = pathname.includes(
-                  `/dashboard/workspaces/${workspace._id}`
+                  `/dashboard/workspaces/${workspace.title}`
                 );
                 return (
                   <SidebarMenuItem key={workspace._id}>
                     <SidebarMenuButton asChild>
                       <Link
-                        href={`/dashboard/workspaces/${workspace._id}`}
+                        href={`/dashboard/workspaces/${workspace.title}`}
                         className={`flex items-center gap-2 w-full p-2 rounded-md transition-all ${
                           isActive ? "bg-gray-100" : ""
                         }`}
