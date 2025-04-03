@@ -54,7 +54,7 @@ function PathCrumb({
     let title =
       customTitles[segment] ||
       pathNameMap[segment] ||
-      (isId ? "Detay" : segment.charAt(0).toUpperCase() + segment.slice(1));
+      (isId ? "Kanban" : segment.charAt(0).toUpperCase() + segment.slice(1));
 
     if (index === pathSegments.length - 1) {
       breadcrumbItems.push(

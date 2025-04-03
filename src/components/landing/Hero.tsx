@@ -1,5 +1,6 @@
 import React from "react";
 import Columns from "@/components/kanban/Columns";
+import { InitialData } from "@/components/kanban/InitialData";
 
 export default function Hero() {
   return (
@@ -21,7 +22,7 @@ export default function Hero() {
           </p>
         </div>
         <div className="relative w-full flex items-start justify-center pt-12">
-          <Columns />
+          {/* <Columns columns={InitialData.columns} /> */}
         </div>
       </div>
     </div>

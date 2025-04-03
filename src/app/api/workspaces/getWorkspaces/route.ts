@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '@/lib/db';
 import Project from '@/models/Project';
 import jwt from 'jsonwebtoken';
+import { IProject } from '@/types/models';
 
 export async function GET(req: NextRequest) {
     try {

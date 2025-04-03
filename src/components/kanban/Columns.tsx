@@ -1,18 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
-import { InitialData } from "@/components/kanban/InitialData";
+import React, { useState, useEffect } from "react";
 import Items from "@/components/kanban/Items";
 import {
   DragDropContext,
   Droppable,
-  DroppableProvided,
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
 
-export default function KanbanBoard() {
-  const [columns, setColumns] = useState(InitialData.columns);
+interface KanbanBoardProps {
+  columns: {
+    id: string;
+    title: string;
+    cards: {
+      id: string;
+      title: string;
+      description: string;
+    }[];
+  }[];
+}
+
+export default function KanbanBoard({
+  columns: initialColumns,
+}: KanbanBoardProps) {
+  const [columns, setColumns] = useState(initialColumns || []);
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
@@ -30,7 +42,7 @@ export default function KanbanBoard() {
     // Handle card reordering within the same column
     if (source.droppableId === destination.droppableId) {
       const column = columns.find(
-        (col) => col.id.toString() === source.droppableId
+        (col: any) => col.id.toString() === source.droppableId
       );
       if (!column) return;
 
@@ -38,7 +50,7 @@ export default function KanbanBoard() {
       const [movedCard] = newCards.splice(source.index, 1);
       newCards.splice(destination.index, 0, movedCard);
 
-      const newColumns = columns.map((col) =>
+      const newColumns = columns.map((col: any) =>
         col.id.toString() === source.droppableId
           ? { ...col, cards: newCards }
           : col
@@ -47,10 +59,10 @@ export default function KanbanBoard() {
     } else {
       // Handle card movement between columns
       const sourceColumn = columns.find(
-        (col) => col.id.toString() === source.droppableId
+        (col: any) => col.id.toString() === source.droppableId
       );
       const destColumn = columns.find(
-        (col) => col.id.toString() === destination.droppableId
+        (col: any) => col.id.toString() === destination.droppableId
       );
       if (!sourceColumn || !destColumn) return;
 
@@ -59,7 +71,7 @@ export default function KanbanBoard() {
       const [movedCard] = sourceCards.splice(source.index, 1);
       destCards.splice(destination.index, 0, movedCard);
 
-      const newColumns = columns.map((col) => {
+      const newColumns = columns.map((col: any) => {
         if (col.id.toString() === source.droppableId) {
           return { ...col, cards: sourceCards };
         }
@@ -81,7 +93,7 @@ export default function KanbanBoard() {
             {...provided.droppableProps}
             className="flex flex-col md:flex-row gap-4 p-4 min-h-[400px] overflow-x-auto custom-scrollbar"
           >
-            {columns.map((column, index) => (
+            {columns.map((column: any, index: any) => (
               <Draggable
                 key={column.id}
                 draggableId={`column-${column.id}`}
@@ -108,7 +120,7 @@ export default function KanbanBoard() {
                           {...provided.droppableProps}
                           className="p-2 overflow-y-auto flex-1 custom-scrollbar"
                         >
-                          {column.cards.map((card, index) => (
+                          {column.cards.map((card: any, index: any) => (
                             <Items key={card.id} card={card} index={index} />
                           ))}
                           {provided.placeholder}
