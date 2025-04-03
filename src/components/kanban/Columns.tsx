@@ -8,6 +8,7 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
+import { PencilLine } from "lucide-react";
 
 interface KanbanBoardProps {
   columns: {
@@ -84,57 +85,64 @@ export default function KanbanBoard({
     }
   };
 
+  console.log(columns);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="columns" direction="horizontal" type="column">
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            className="flex flex-col md:flex-row gap-4 p-4 min-h-[400px] overflow-x-auto custom-scrollbar"
-          >
-            {columns.map((column: any, index: any) => (
-              <Draggable
-                key={column.id}
-                draggableId={`column-${column.id}`}
-                index={index}
-              >
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.draggableProps}
-                    className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm w-full md:w-72 min-w-[300px] mb-4 md:mb-0 h-auto md:h-[350px] flex flex-col"
-                  >
+      <div className="flex-1 overflow-hidden h-full">
+        <Droppable droppableId="columns" direction="horizontal" type="column">
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className="flex md:flex-row gap-4 overflow-x-auto overflow-y-hidden h-full pb-4"
+            >
+              {columns.map((column: any, index: any) => (
+                <Draggable
+                  key={column.id}
+                  draggableId={`column-${column.id}`}
+                  index={index}
+                >
+                  {(provided, snapshot) => (
                     <div
-                      {...provided.dragHandleProps}
-                      className="p-2 border-b border-gray-100/30 cursor-grab active:cursor-grabbing"
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col h-full"
                     >
-                      <h3 className="pt-1.5 font-medium text-gray-700">
-                        {column.title}
-                      </h3>
+                      <div
+                        {...provided.dragHandleProps}
+                        className="p-2 border-b border-gray-100/30 cursor-grab active:cursor-grabbing flex-shrink-0"
+                      >
+                        <h3 className="pt-1.5 font-semibold text-gray-700">
+                          {column.title}
+                          <div className="text-xs text-neutral-600 pt-1">
+                            {column.cards.length} tasks
+                          </div>
+                        </h3>
+                      </div>
+                      <Droppable droppableId={column.id.toString()} type="card">
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                            className="p-2 overflow-y-auto flex-1 custom-scrollbar"
+                          >
+                            {column.cards.map((card: any, index: any) => (
+                              <Items key={card.id} card={card} index={index} />
+                            ))}
+                            {provided.placeholder}
+                          </div>
+                        )}
+                      </Droppable>
                     </div>
-                    <Droppable droppableId={column.id.toString()} type="card">
-                      {(provided) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.droppableProps}
-                          className="p-2 overflow-y-auto flex-1 custom-scrollbar"
-                        >
-                          {column.cards.map((card: any, index: any) => (
-                            <Items key={card.id} card={card} index={index} />
-                          ))}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </div>
-                )}
-              </Draggable>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </div>
     </DragDropContext>
   );
 }

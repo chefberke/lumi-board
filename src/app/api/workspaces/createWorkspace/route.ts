@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     // Add completion message item to Done column
     const completionItem = await Item.create({
-      title: 'Proje başarıyla oluşturuldu! 🎉',
+      title: 'The project was successfully created!',
       order: 0,
       columnId: doneColumn._id,
     });

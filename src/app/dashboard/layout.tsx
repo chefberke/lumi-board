@@ -7,12 +7,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="h-screen overflow-hidden flex flex-col">
         <SidebarTrigger />
-        <div className="p-6">
-          <PathCrumb />
+        <div className="flex-1 overflow-hidden p-6">
+          <div className="mb-6">
+            <PathCrumb />
+          </div>
           <Onboarding />
-          <div className="pt-4">{children}</div>
+          <div className="mt-2 h-[calc(100%-4rem)] overflow-hidden">
+            {children}
+          </div>
         </div>
       </main>
     </SidebarProvider>

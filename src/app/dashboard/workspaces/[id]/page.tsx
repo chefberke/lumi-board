@@ -43,8 +43,8 @@ function WorkspacePage() {
   }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">{data.workspace.title}</h1>
+    <div className="h-full">
+      {/* <h1 className="text-2xl font-bold mb-4">{data.workspace.title}</h1> */}
       <KanbanBoard columns={data.workspace.columns} />
     </div>
   );

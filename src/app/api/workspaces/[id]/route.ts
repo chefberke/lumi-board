@@ -10,7 +10,7 @@ import { IProject, IColumn, IItem } from '@/types/models';
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     await connect();
-    const { id } = params;
+    const { id } = await params;
 
     const token = req.cookies.get('jwt')?.value;
     if (!token) {
