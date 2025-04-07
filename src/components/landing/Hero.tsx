@@ -1,6 +1,5 @@
 import React from "react";
-import Columns from "@/components/kanban/Columns";
-import { InitialData } from "@/components/kanban/InitialData";
+import Countdown from "@/components/landing/Countdown";
 
 export default function Hero() {
   return (
@@ -16,13 +15,13 @@ export default function Hero() {
             </span>{" "}
             kanban board
           </h2>
-          <p className="text-center text-gray-600 mt-4 max-w-lg">
+          <p className="text-center text-gray-600 mt-4 max-w-lg text-lg">
             Lumi is a back to basic kanban board focused on <br /> fast and
             delightful user experience.
           </p>
         </div>
         <div className="relative w-full flex items-start justify-center pt-12">
-          {/* <Columns columns={InitialData.columns} /> */}
+          <Countdown />
         </div>
       </div>
     </div>

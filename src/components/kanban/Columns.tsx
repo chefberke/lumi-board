@@ -8,7 +8,6 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
-import { PencilLine } from "lucide-react";
 
 interface KanbanBoardProps {
   columns: {

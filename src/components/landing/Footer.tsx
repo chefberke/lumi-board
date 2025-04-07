@@ -5,7 +5,7 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <div className="min-h-24 py-4 w-full flex items-center justify-center text-sm border-t border-t-neutral-100">
+    <div className="min-h-24 py-4 w-full flex items-center justify-center text-sm">
       <div className="flex flex-col md:flex-row items-center justify-between w-full px-4 md:px-8 gap-4 md:gap-0">
         <div>
           <Link href={"/"}>
@@ -28,7 +28,9 @@ function Footer() {
           </ul>
         </div>
         <div className="order-2 md:order-3">
-          <p className="text-neutral-900 text-center md:text-right">© 2025 Lumi. All rights reserved.</p>
+          <p className="text-neutral-900 text-center md:text-right">
+            © 2025 Lumi. All rights reserved.
+          </p>
         </div>
       </div>
     </div>
