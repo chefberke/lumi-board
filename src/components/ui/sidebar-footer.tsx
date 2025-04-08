@@ -83,7 +83,7 @@ function SidebarFooters() {
                       Manage your account settings and preferences here.
                     </DialogDescription>
                   </DialogHeader>
-                  <div className="flex items-start justify-start gap-4">
+                  <div className="flex items-center justify-start gap-4">
                     <Image
                       src={
                         "https://cdn.jsdelivr.net/gh/alohe/avatars/png/notion_1.png"
