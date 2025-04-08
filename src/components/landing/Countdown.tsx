@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function Countdown() {
-  const targetDate = new Date();
-  targetDate.setMonth(targetDate.getMonth() + 1);
-  targetDate.setDate(targetDate.getDate() + 7);
+  const targetDateRef = useRef<Date | null>(null);
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -14,15 +12,27 @@ function Countdown() {
   const [isExpired, setIsExpired] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const storedDate = localStorage.getItem("targetDate");
+    if (!targetDateRef.current) {
+      if (storedDate) {
+        targetDateRef.current = new Date(storedDate);
+      } else {
+        const target = new Date();
+        target.setDate(target.getDate() + 36);
+        targetDateRef.current = target;
+        localStorage.setItem("targetDate", target.toISOString());
+      }
+    }
+
+    const calculateTime = () => {
       const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
+      const difference = targetDateRef.current!.getTime() - now.getTime();
 
       if (difference <= 0) {
-        clearInterval(interval);
         setIsExpired(true);
-        return;
+        return false;
       }
+
       const d = Math.floor(difference / (1000 * 60 * 60 * 24));
       const h = Math.floor(
         (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
@@ -34,10 +44,15 @@ function Countdown() {
       setHours(h);
       setMinutes(m);
       setSeconds(s);
-    }, 1000);
+      return true;
+    };
+
+    if (!calculateTime()) return;
+
+    const interval = setInterval(calculateTime, 1000);
 
     return () => clearInterval(interval);
-  }, [targetDate]);
+  }, []);
 
   const formatNumber = (num: number): string => {
     return num < 10 ? `0${num}` : num.toString();
