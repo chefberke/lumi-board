@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useKanbanStore } from "@/stores/kanbanStore";
 
 const pathNameMap: Record<string, string> = {
   dashboard: "Dashboard",
@@ -31,6 +32,8 @@ function PathCrumb({
   homeUrl = "/dashboard",
 }: PathCrumbProps = {}) {
   const pathname = usePathname();
+
+  const { data } = useKanbanStore();
 
   const pathSegments = pathname.split("/").filter((segment) => segment !== "");
 
@@ -54,7 +57,9 @@ function PathCrumb({
     let title =
       customTitles[segment] ||
       pathNameMap[segment] ||
-      (isId ? "Kanban" : segment.charAt(0).toUpperCase() + segment.slice(1));
+      (isId
+        ? data?.workspace?.title
+        : segment.charAt(0).toUpperCase() + segment.slice(1));
 
     if (index === pathSegments.length - 1) {
       breadcrumbItems.push(
