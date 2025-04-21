@@ -19,6 +19,7 @@ import { Workspace } from "@/types/workspace";
 import { usePathname } from "next/navigation";
 import { Folder } from "lucide-react";
 import Link from "next/link";
+import SettingsWorkspace from "@/components/ui/settings-workspace";
 
 function workspaces() {
   const { data, loading, error, fetchData } = getWorkspaces();
@@ -68,12 +69,20 @@ function workspaces() {
                     <SidebarMenuButton asChild>
                       <Link
                         href={`/dashboard/workspaces/${workspace._id}`}
-                        className={`flex items-center gap-2 w-full p-2 rounded-md transition-all ${
+                        className={`group flex items-center gap-2 w-full p-2 rounded-md transition-all ${
                           isActive ? "bg-gray-100" : ""
                         }`}
                       >
                         <Folder />
-                        <p>{workspace.title || "Unkown"}</p>
+                        <div className="flex items-center justify-between w-full">
+                          {workspace.title || "Unknown"}
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <SettingsWorkspace
+                              title={workspace.title}
+                              id={workspace._id}
+                            />
+                          </div>
+                        </div>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

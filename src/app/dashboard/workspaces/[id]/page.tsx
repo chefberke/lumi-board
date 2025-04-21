@@ -24,15 +24,6 @@ function WorkspacePage() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="p-4 text-red-500">
-        <h1 className="text-2xl font-bold mb-4">Error</h1>
-        <p>{error}</p>
-      </div>
-    );
-  }
-
   if (!data || !data.workspace) {
     return (
       <div className="p-4">
