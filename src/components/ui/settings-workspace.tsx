@@ -17,7 +17,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Ellipsis, PencilLine, Trash } from "lucide-react";
+import { Ellipsis } from "lucide-react";
+import RenameWorkspace from "@/components/ui/rename-workspace";
+import DeleteWorkspace from "@/components/ui/delete-workspace";
 
 function SettingsWorkspace({ title, id }: any) {
   return (
@@ -28,12 +30,9 @@ function SettingsWorkspace({ title, id }: any) {
       <DropdownMenuContent>
         <DropdownMenuLabel>{title}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="text-neutral-700">
-          <PencilLine /> Rename
-        </DropdownMenuItem>
-        <DropdownMenuItem className="text-neutral-700">
-          <Trash className="text-red-500" /> Delete
-        </DropdownMenuItem>
+
+        <RenameWorkspace id={id} title={title} />
+        <DeleteWorkspace id={id} title={title} />
       </DropdownMenuContent>
     </DropdownMenu>
   );

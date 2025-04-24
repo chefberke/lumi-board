@@ -1,7 +1,7 @@
 import { storeState } from "@/types/storeState";
 import { create } from "zustand";
 
-export const createWorkspace = create<storeState>((set) => ({
+export const updateWorkspace = create<storeState>((set) => ({
   error: null,
 
   fetchData: async (id: String, name: String) => {
@@ -14,7 +14,7 @@ export const createWorkspace = create<storeState>((set) => ({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({id, name})
+          body: JSON.stringify({ id, title: name })
         }
       );
 

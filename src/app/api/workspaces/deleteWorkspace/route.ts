@@ -6,10 +6,11 @@ import { connect } from '@/lib/db';
 
 export async function DELETE(req: Request) {
   try {
-   
+
     await connect();
-    const { searchParams } = new URL(req.url);
-    const projectId = searchParams.get('id');
+
+    const { id } = await req.json();
+    const projectId = id; // Assuming id is passed in the reque
 
     if (!projectId) {
       return NextResponse.json(
@@ -26,7 +27,7 @@ export async function DELETE(req: Request) {
       );
     }
 
-    
+
 
     // Delete all items in all columns
     const columns = await Column.find({ projectId });

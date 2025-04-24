@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { createWorkspace } from "@/stores/createWorkspace";
+import { Input } from "./input";
 
 function CreateWorkspace() {
   const [workspaceName, setWorkspaceName] = React.useState("");
@@ -85,12 +86,12 @@ function CreateWorkspace() {
         </DialogHeader>
         <div className="w-full">
           <p className="text-sm text-neutral-700">Workspace Name</p>
-          <input
+          <Input
             value={workspaceName}
             onChange={(e) => setWorkspaceName(e.target.value)}
             maxLength={15}
             type="text"
-            className="mt-2 w-64 border border-gray-300 bg-gray-100 shadow rounded-md px-3 py-1 focus:outline-[#4B4EE7]"
+            className="mt-2.5 w-64 bg-neutral-50"
           />
           <div className="pt-3 flex items-center gap-2">
             <Checkbox id="defaultValues" disabled checked={true} />
