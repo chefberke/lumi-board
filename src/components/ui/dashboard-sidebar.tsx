@@ -26,16 +26,19 @@ const items = [
     title: "Home",
     url: "/dashboard",
     icon: Home,
+    live: true,
   },
   {
     title: "Inbox",
     url: "/dashboard/inbox",
     icon: Inbox,
+    live: false,
   },
   {
     title: "Calendar",
     url: "/dashboard/calendar",
     icon: Calendar,
+    live: false,
   },
 ];
 
@@ -67,6 +70,11 @@ export function AppSidebar() {
                     >
                       <item.icon />
                       <span>{item.title}</span>
+                      {!item.live && (
+                        <span className="bg-lumi text-white rounded-md px-1 py-0.5 font-medium text-xs">
+                          Soon
+                        </span>
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

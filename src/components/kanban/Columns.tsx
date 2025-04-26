@@ -8,6 +8,7 @@ import {
   Draggable,
   DropResult,
 } from "@hello-pangea/dnd";
+import { useParams } from "next/navigation";
 
 interface KanbanBoardProps {
   columns: {
@@ -25,21 +26,46 @@ export default function KanbanBoard({
   columns: initialColumns,
 }: KanbanBoardProps) {
   const [columns, setColumns] = useState(initialColumns || []);
+  const params = useParams();
+  const workspaceId = params.id as string;
+  const [isSaving, setIsSaving] = useState(false);
+
+  const saveChangesToBackend = async (updatedColumns: any) => {
+    try {
+      setIsSaving(true);
+      const response = await fetch(`/api/workspaces/${workspaceId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ columns: updatedColumns }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save changes");
+      }
+
+      console.log("Changes saved successfully");
+    } catch (error) {
+      console.error("Backend save error:", error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
     if (!destination) return;
 
-    // Handle column reordering
     if (type === "column") {
       const newColumns = Array.from(columns);
       const [movedColumn] = newColumns.splice(source.index, 1);
       newColumns.splice(destination.index, 0, movedColumn);
       setColumns(newColumns);
+      saveChangesToBackend(newColumns);
       return;
     }
 
-    // Handle card reordering within the same column
     if (source.droppableId === destination.droppableId) {
       const column = columns.find(
         (col: any) => col.id.toString() === source.droppableId
@@ -56,8 +82,8 @@ export default function KanbanBoard({
           : col
       );
       setColumns(newColumns);
+      saveChangesToBackend(newColumns);
     } else {
-      // Handle card movement between columns
       const sourceColumn = columns.find(
         (col: any) => col.id.toString() === source.droppableId
       );
@@ -81,14 +107,18 @@ export default function KanbanBoard({
         return col;
       });
       setColumns(newColumns);
+      saveChangesToBackend(newColumns);
     }
   };
 
-  console.log(columns);
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex-1 overflow-hidden h-full">
+      <div className="flex-1 overflow-hidden h-full relative">
+        {isSaving && (
+          <div className="absolute top-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md text-sm">
+            Saving...
+          </div>
+        )}
         <Droppable droppableId="columns" direction="horizontal" type="column">
           {(provided) => (
             <div

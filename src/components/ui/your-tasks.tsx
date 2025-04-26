@@ -160,7 +160,19 @@ function YourTasks() {
                     task.columnName === "Done"
                       ? "bg-green-300"
                       : "bg-primary/10"
-                  }`}
+                  }
+                  ${
+                    task.columnName === "In Progress"
+                      ? "bg-yellow-300"
+                      : "bg-primary/10"
+                  }
+
+                  ${
+                    task.columnName === "Todo"
+                      ? "bg-orange-400"
+                      : "bg-primary/10"
+                  }
+                  `}
                 >
                   {task.columnName}
                 </span>

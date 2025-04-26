@@ -30,17 +30,17 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
     // Find all columns for this project
     const columns = await Column.find({ projectId: id }).sort({ order: 1 }).lean();
-    
+
     // Get all items for all columns
     const columnIds = columns.map(col => col._id);
     const items = await Item.find({ columnId: { $in: columnIds } }).lean();
-    
+
     // Group items by column
     const columnsWithCards = columns.map(column => {
-      const columnItems = items.filter(item => 
+      const columnItems = items.filter(item =>
         item.columnId.toString() === column?._id?.toString()
       );
-      
+
       return {
         id: column._id,
         title: column.title,
@@ -63,6 +63,57 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     console.error('Error fetching workspace:', error);
     return NextResponse.json(
       { error: 'Failed to fetch workspace' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    await connect();
+    const { id } = params;
+    const { columns } = await req.json();
+
+    const token = req.cookies.get('jwt')?.value;
+    if (!token) {
+      return NextResponse.json(
+        { error: 'Unauthorized - No token provided' },
+        { status: 401 }
+      );
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
+
+    // Projeyi kontrol et
+    const project = await Project.findById(id);
+    if (!project) {
+      return NextResponse.json({ error: 'Workspace not found' }, { status: 404 });
+    }
+
+    // Kolonları güncelle
+    for (let i = 0; i < columns.length; i++) {
+      const column = columns[i];
+
+      // Kolon sırasını güncelle
+      await Column.findByIdAndUpdate(column.id, { order: i });
+
+      // Kartları güncelle
+      for (let j = 0; j < column.cards.length; j++) {
+        const card = column.cards[j];
+        await Item.findByIdAndUpdate(card.id, {
+          columnId: column.id,
+          order: j,
+          title: card.title,
+          description: card.description || ''
+        });
+      }
+    }
+
+    return NextResponse.json({ success: true, message: 'Workspace updated successfully' });
+  } catch (error) {
+    console.error('Error updating workspace:', error);
+    return NextResponse.json(
+      { error: 'Failed to update workspace' },
       { status: 500 }
     );
   }
