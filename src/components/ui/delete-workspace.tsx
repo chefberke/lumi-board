@@ -35,6 +35,7 @@ function DeleteWorkspace({ id, title }: { id: string; title: string }) {
       description: "Project deleted successfully.",
     });
     router.push("/dashboard");
+    localStorage.removeItem("recentWorkspaces");
     setOpen(false);
   }
 

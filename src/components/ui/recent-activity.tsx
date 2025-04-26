@@ -42,7 +42,7 @@ function RecentActivity() {
     return (
       <div className="space-y-2">
         <h2 className="text-lg font-medium">Recent Activities</h2>
-        <div className="space-y-2">
+        <div className="space-y-2 flex gap-4">
           {[...Array(3)].map((_, i) => (
             <Skeleton key={i} className="h-12 w-full" />
           ))}
