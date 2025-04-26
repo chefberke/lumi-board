@@ -10,11 +10,48 @@ function WorkspacePage() {
   const workspaceId = params.id as string;
   const { data, loading, error, fetchData } = useKanbanStore();
 
+  const saveRecentWorkspace = (workspaceId: string, workspaceName: string) => {
+    if (!workspaceId && !workspaceName) return;
+
+    const key = "recentWorkspaces";
+    const existingRaw = localStorage.getItem(key);
+    let existing: { id: string; name: string }[] = [];
+
+    if (existingRaw) {
+      try {
+        existing = JSON.parse(existingRaw) || [];
+        if (!Array.isArray(existing)) {
+          existing = [];
+        }
+      } catch (error) {
+        existing = [];
+      }
+    }
+    if (!workspaceName) {
+      return;
+    }
+
+    const updated = existing.filter(
+      (workspace) => workspace.id !== workspaceId
+    );
+
+    updated.unshift({
+      id: workspaceId,
+      name: workspaceName,
+    });
+
+    const limited = updated.slice(0, 5);
+    localStorage.setItem(key, JSON.stringify(limited));
+  };
+
+  const workspaceName = data?.workspace?.title;
+
   useEffect(() => {
     if (workspaceId) {
       fetchData(workspaceId);
+      saveRecentWorkspace(workspaceId, workspaceName);
     }
-  }, [workspaceId, fetchData]);
+  }, [workspaceId, workspaceName, fetchData]);
 
   if (loading) {
     return (

@@ -51,6 +51,7 @@ function SidebarFooters() {
   async function signOutFunc() {
     try {
       await signOut.getState().fetchData();
+      localStorage.removeItem("recentWorkspaces");
       router.push("/sign-in");
     } catch (err) {
       toast({
