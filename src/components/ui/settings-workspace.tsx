@@ -17,7 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, UserRound } from "lucide-react";
 import RenameWorkspace from "@/components/ui/rename-workspace";
 import DeleteWorkspace from "@/components/ui/delete-workspace";
 
@@ -33,6 +33,14 @@ function SettingsWorkspace({ title, id }: any) {
 
         <RenameWorkspace id={id} title={title} />
         <DeleteWorkspace id={id} title={title} />
+
+        <DropdownMenuItem disabled className="hover:cursor-not-allowed">
+          <UserRound className="mr-2" />
+          <span className="mr-2">Add User</span>
+          {/* <span className="bg-lumi text-white rounded-md px-1 py-0.5 font-medium text-xs">
+            Soon
+          </span> */}
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
