@@ -9,6 +9,7 @@ import {
   DropResult,
 } from "@hello-pangea/dnd";
 import { useParams } from "next/navigation";
+import { getMe } from "@/stores/getMe";
 
 interface KanbanBoardProps {
   columns: {
@@ -29,6 +30,8 @@ export default function KanbanBoard({
   const params = useParams();
   const workspaceId = params.id as string;
   const [isSaving, setIsSaving] = useState(false);
+
+  const { data: userData } = getMe();
 
   const saveChangesToBackend = async (updatedColumns: any) => {
     try {
@@ -115,7 +118,7 @@ export default function KanbanBoard({
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="flex-1 overflow-hidden h-full relative">
         {isSaving && (
-          <div className="absolute top-2 right-2 bg-blue-500 text-white px-3 py-1 rounded-md text-sm">
+          <div className="absolute top-2 right-2 bg-lumi text-white px-3 py-1 rounded-md text-sm">
             Saving...
           </div>
         )}
@@ -157,7 +160,12 @@ export default function KanbanBoard({
                             className="p-2 overflow-y-auto flex-1 custom-scrollbar"
                           >
                             {column.cards.map((card: any, index: any) => (
-                              <Items key={card.id} card={card} index={index} />
+                              <Items
+                                key={card.id}
+                                card={card}
+                                index={index}
+                                user={userData}
+                              />
                             ))}
                             {provided.placeholder}
                           </div>

@@ -47,7 +47,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
         cards: columnItems.map(item => ({
           id: item._id,
           title: item.title,
-          description: item.description || ''
+          description: item.description || '',
+          createdAt: item.createdAt,
         }))
       };
     });
@@ -55,6 +56,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({
       workspace: {
         id: project._id.toString(),
+        ownerId: project.owner,
         title: project.title,
         columns: columnsWithCards
       }

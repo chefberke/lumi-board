@@ -21,7 +21,7 @@ function SignIn() {
 
     try {
       const response = await signIn({ email, password });
-      setUser({ email, id: response.id });
+      setUser({ email, id: response.user._id });
       router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {

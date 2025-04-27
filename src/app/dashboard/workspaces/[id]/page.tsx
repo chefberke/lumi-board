@@ -1,14 +1,18 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import KanbanBoard from "@/components/kanban/Columns";
 import { useKanbanStore } from "@/stores/kanbanStore";
+import { getUser } from "@/lib/auth";
+import { useRouter } from "next/navigation";
 
 function WorkspacePage() {
   const params = useParams();
+  const router = useRouter();
   const workspaceId = params.id as string;
   const { data, loading, error, fetchData } = useKanbanStore();
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   const saveRecentWorkspace = (workspaceId: string, workspaceName: string) => {
     if (!workspaceId && !workspaceName) return;
@@ -53,6 +57,20 @@ function WorkspacePage() {
     }
   }, [workspaceId, workspaceName, fetchData]);
 
+  console.log(data);
+
+  useEffect(() => {
+    if (data && data.workspace) {
+      const user = getUser();
+      if (user && user.id === data.workspace.ownerId) {
+        setIsAuthorized(true);
+      } else {
+        setIsAuthorized(false);
+        router.push("/dashboard");
+      }
+    }
+  }, [data, router]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
@@ -61,7 +79,7 @@ function WorkspacePage() {
     );
   }
 
-  if (!data || !data.workspace) {
+  if (!data || !data.workspace || !isAuthorized) {
     return (
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Workspace not found</h1>
