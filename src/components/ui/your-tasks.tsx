@@ -150,28 +150,15 @@ function YourTasks() {
             className="p-4 rounded-lg border border-gray-100 hover:bg-accent hover:border-primary/20 transition-all cursor-pointer"
           >
             <div className="flex flex-col">
-              <h3 className="font-medium">{task.title}</h3>
-              <p className="text-sm text-neutral-400 text-muted-foreground line-clamp-1">
-                {task.description}
-              </p>
+              <h3 className="font-medium text-neutral-700">{task.title}</h3>
               <div className="flex justify-between items-center mt-2">
                 <span
                   className={`text-xs text-primary px-2 py-0.5 rounded-full ${
-                    task.columnName === "Done"
-                      ? "bg-green-300"
-                      : "bg-primary/10"
+                    task.columnName == "Done" ? "bg-green-300" : ""
                   }
-                  ${
-                    task.columnName === "In Progress"
-                      ? "bg-yellow-300"
-                      : "bg-primary/10"
-                  }
+                  ${task.columnName == "In Progress" ? "bg-yellow-300" : ""}
 
-                  ${
-                    task.columnName === "Todo"
-                      ? "bg-orange-400"
-                      : "bg-primary/10"
-                  }
+                  ${task.columnName == "Todo" ? "bg-blue-400" : ""}
                   `}
                 >
                   {task.columnName}

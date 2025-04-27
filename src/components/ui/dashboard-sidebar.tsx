@@ -66,7 +66,9 @@ export function AppSidebar() {
                         isActive
                           ? "bg-neutral-100 text-neutral-900"
                           : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
-                      }`}
+                      }
+                      ${!item.live && "cursor-not-allowed"}
+                      `}
                     >
                       <item.icon />
                       <span>{item.title}</span>
