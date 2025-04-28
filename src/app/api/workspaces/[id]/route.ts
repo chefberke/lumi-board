@@ -6,6 +6,7 @@ import Item from '@/models/Item';
 import { connect } from '@/lib/db';
 import jwt from 'jsonwebtoken';
 import { IProject, IColumn, IItem } from '@/types/models';
+import mongoose from 'mongoose';
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   try {
@@ -102,12 +103,25 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       // Kartları güncelle
       for (let j = 0; j < column.cards.length; j++) {
         const card = column.cards[j];
-        await Item.findByIdAndUpdate(card.id, {
-          columnId: column.id,
-          order: j,
-          title: card.title,
-          description: card.description || ''
-        });
+        // Eğer kart mevcutsa güncelle, yoksa yeni oluştur
+        if (card.id && mongoose.Types.ObjectId.isValid(card.id) && await Item.findById(card.id)) {
+          await Item.findByIdAndUpdate(card.id, {
+            columnId: column.id,
+            order: j,
+            title: card.title,
+            description: card.description || ''
+          });
+        } else {
+          // Yeni kart oluştur
+          const newItem = await Item.create({
+            _id: mongoose.Types.ObjectId.isValid(card.id) ? card.id : new mongoose.Types.ObjectId(),
+            title: card.title,
+            order: j,
+            columnId: card.columnId ? (typeof card.columnId === "string" ? new mongoose.Types.ObjectId(card.columnId) : card.columnId) : column.id,
+            description: card.description || '',
+            createdAt: card.createdAt || new Date()
+          });
+        }
       }
     }
 

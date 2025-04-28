@@ -10,6 +10,17 @@ import {
 } from "@hello-pangea/dnd";
 import { useParams } from "next/navigation";
 import { getMe } from "@/stores/getMe";
+import { Plus } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface KanbanBoardProps {
   columns: {
@@ -18,7 +29,8 @@ interface KanbanBoardProps {
     cards: {
       id: string;
       title: string;
-      description: string;
+      description?: string;
+      createdAt?: string;
     }[];
   }[];
 }
@@ -30,22 +42,45 @@ export default function KanbanBoard({
   const params = useParams();
   const workspaceId = params.id as string;
   const [isSaving, setIsSaving] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newCardTitle, setNewCardTitle] = useState("");
+  const [activeColumn, setActiveColumn] = useState<any>(null);
 
   const { data: userData } = getMe();
 
   const saveChangesToBackend = async (updatedColumns: any) => {
     try {
       setIsSaving(true);
+
+      const formattedColumns = updatedColumns.map((column: any) => {
+        return {
+          id: column.id,
+          title: column.title,
+          cards: column.cards.map((card: any, index: number) => {
+            return {
+              id: card.id,
+              title: card.title,
+              description: card.description || "",
+              order: index,
+              columnId: card.columnId || column.id,
+              ...(card.createdAt && { createdAt: card.createdAt }),
+            };
+          }),
+        };
+      });
+
       const response = await fetch(`/api/workspaces/${workspaceId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ columns: updatedColumns }),
+        body: JSON.stringify({ columns: formattedColumns }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save changes");
+        const errorData = await response.json().catch(() => null);
+        console.error("Server error details:", errorData);
+        throw new Error(`Failed to save changes: ${response.status}`);
       }
 
       console.log("Changes saved successfully");
@@ -54,6 +89,58 @@ export default function KanbanBoard({
     } finally {
       setIsSaving(false);
     }
+  };
+
+  const handleAddCard = () => {
+    if (!activeColumn || !newCardTitle.trim()) return;
+    const timestamp = Math.floor(new Date().getTime() / 1000)
+      .toString(16)
+      .padStart(8, "0");
+    const machineId = Math.floor(Math.random() * 16777216)
+      .toString(16)
+      .padStart(6, "0");
+    const processId = Math.floor(Math.random() * 65536)
+      .toString(16)
+      .padStart(4, "0");
+    const counter = Math.floor(Math.random() * 16777216)
+      .toString(16)
+      .padStart(6, "0");
+    const newCardId = timestamp + machineId + processId + counter;
+
+    const currentDate = new Date().toISOString();
+
+    const updatedColumns = columns.map((col) => {
+      if (col.id === activeColumn.id) {
+        return {
+          ...col,
+          cards: [
+            ...col.cards,
+            {
+              id: newCardId,
+              title: newCardTitle.trim(),
+              description: "",
+              createdAt: currentDate,
+              order: col.cards.length,
+              columnId: col.id,
+            },
+          ],
+        };
+      }
+      return col;
+    });
+
+    setColumns(updatedColumns);
+    saveChangesToBackend(updatedColumns);
+
+    setIsDialogOpen(false);
+    setNewCardTitle("");
+    setActiveColumn(null);
+  };
+
+  const openAddCardDialog = (column: any, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setActiveColumn(column);
+    setIsDialogOpen(true);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -139,18 +226,25 @@ export default function KanbanBoard({
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className="bg-gray-50/50 border border-gray-100/30 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col h-full"
+                      className="bg-gray-50/50 group border border-gray-100/30 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col h-full"
                     >
                       <div
                         {...provided.dragHandleProps}
                         className="p-2 border-b border-gray-100/30 cursor-grab active:cursor-grabbing flex-shrink-0"
                       >
-                        <h3 className="pt-1.5 font-semibold text-gray-700">
-                          {column.title}
-                          <div className="text-xs text-neutral-600 pt-1">
-                            {column.cards.length} tasks
+                        <h3 className="pt-1.5 font-semibold text-gray-700 flex w-full justify-between">
+                          <span>{column.title}</span>
+                          <div>
+                            <Plus
+                              className="text-neutral-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                              size={16}
+                              onClick={(e) => openAddCardDialog(column, e)}
+                            />
                           </div>
                         </h3>
+                        <div className="text-xs text-neutral-600 pt-1">
+                          {column.cards.length} tasks
+                        </div>
                       </div>
                       <Droppable droppableId={column.id.toString()} type="card">
                         {(provided) => (
@@ -180,6 +274,38 @@ export default function KanbanBoard({
           )}
         </Droppable>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Add a new task</DialogTitle>
+            <DialogDescription>
+              {activeColumn
+                ? `Add a new task to the "${activeColumn.title}" column.`
+                : "Add a new task."}
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-4">
+            <div className="grid gap-2">
+              <Input
+                id="title"
+                value={newCardTitle}
+                onChange={(e) => setNewCardTitle(e.target.value)}
+                placeholder="Task title"
+                className="w-full"
+              />
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleAddCard}>Add</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </DragDropContext>
   );
 }

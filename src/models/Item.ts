@@ -21,6 +21,10 @@ const itemSchema = new mongoose.Schema(
       ref: 'Column',
       required: true,
     },
+    description: {
+      type: String,
+      default: '',
+    },
     dueDate: {
       type: Date,
     },

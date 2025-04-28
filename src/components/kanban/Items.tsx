@@ -8,7 +8,7 @@ import Image from "next/image";
 
 interface CardProps {
   card: {
-    id: number;
+    id: string | number;
     title: string;
     description: string;
     createdAt: string;
@@ -57,8 +57,8 @@ function Items({ card, index, user }: CardProps) {
                   }
                   alt="user-image"
                   className="rounded-full border-2 border-neutral-700"
-                  width={28}
-                  height={28}
+                  width={25}
+                  height={25}
                 />
               </div>
             </div>
