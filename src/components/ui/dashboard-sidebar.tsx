@@ -38,7 +38,7 @@ const items = [
     title: "Calendar",
     url: "/dashboard/calendar",
     icon: Calendar,
-    live: false,
+    live: true,
   },
 ];
 
