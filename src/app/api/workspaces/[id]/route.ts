@@ -93,6 +93,16 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Workspace not found' }, { status: 404 });
     }
 
+    // Mevcut tüm kolonları ve kartları al
+    const existingColumns = await Column.find({ projectId: id }).lean();
+    const existingColumnIds = existingColumns.map(col => col._id.toString());
+
+    // Mevcut tüm kartları al
+    const existingItems = await Item.find({ columnId: { $in: existingColumnIds } }).lean();
+
+    // Gönderilen kartların ID'lerini topla
+    const updatedCardIds = new Set();
+
     // Kolonları güncelle
     for (let i = 0; i < columns.length; i++) {
       const column = columns[i];
@@ -111,6 +121,7 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
             title: card.title,
             description: card.description || ''
           });
+          updatedCardIds.add(card.id.toString());
         } else {
           // Yeni kart oluştur
           const newItem = await Item.create({
@@ -121,8 +132,15 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
             description: card.description || '',
             createdAt: card.createdAt || new Date()
           });
+          updatedCardIds.add(newItem._id.toString());
         }
       }
+    }
+
+    // Silinen kartları tespit et ve sil
+    const deletedItems = existingItems.filter(item => !updatedCardIds.has(item._id.toString()));
+    for (const item of deletedItems) {
+      await Item.findByIdAndDelete(item._id);
     }
 
     return NextResponse.json({ success: true, message: 'Workspace updated successfully' });

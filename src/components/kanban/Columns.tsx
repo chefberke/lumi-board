@@ -143,6 +143,18 @@ export default function KanbanBoard({
     setIsDialogOpen(true);
   };
 
+  const handleDeleteCard = (cardId: string | number) => {
+    const updatedColumns = columns.map((column) => {
+      return {
+        ...column,
+        cards: column.cards.filter((card) => card.id !== cardId),
+      };
+    });
+
+    setColumns(updatedColumns);
+    saveChangesToBackend(updatedColumns);
+  };
+
   const onDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
     if (!destination) return;
@@ -259,6 +271,7 @@ export default function KanbanBoard({
                                 card={card}
                                 index={index}
                                 user={userData}
+                                onDelete={handleDeleteCard}
                               />
                             ))}
                             {provided.placeholder}

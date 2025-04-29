@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Draggable,
   DraggableProvided,
   DraggableStateSnapshot,
 } from "@hello-pangea/dnd";
 import Image from "next/image";
+import { Dot, Ellipsis, Trash } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface CardProps {
   card: {
@@ -15,11 +22,19 @@ interface CardProps {
   };
   index: number;
   user: any;
+  onDelete?: (cardId: string | number) => void;
 }
 
-function Items({ card, index, user }: CardProps) {
+function Items({ card, index, user, onDelete }: CardProps) {
   const date = new Date(card.createdAt);
   const formattedDate = date.toLocaleDateString("en-GB");
+
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(card.id);
+    }
+  };
   return (
     <Draggable draggableId={card.id.toString()} index={index}>
       {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => {
@@ -39,9 +54,31 @@ function Items({ card, index, user }: CardProps) {
               zIndex: snapshot.isDragging ? 1000 : 1,
             }}
           >
-            <h4 className="font-medium text-gray-800 mb-1 text-sm md:text-base">
-              {card.title}
-            </h4>
+            <div className="flex justify-between items-start mb-1 group">
+              <h4 className="font-medium text-gray-800 text-sm md:text-base">
+                {card.title}
+              </h4>
+              {onDelete && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100">
+                      <Ellipsis size={16} />
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onClick={handleDelete}
+                      className="text-red-400 text-xs"
+                    >
+                      <Trash size={14} className="mr-2" />
+                      Delete
+                    </DropdownMenuItem>
+                    {/* add rename later */}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </div>
+
             <p className="text-xs md:text-sm text-gray-600">
               {card.description}
             </p>
