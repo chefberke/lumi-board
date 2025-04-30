@@ -26,13 +26,11 @@ function YourTasks() {
     const getAllTasks = async () => {
       setLoading(true);
       try {
-        // Get all workspaces directly from the store
         let workspaceIds: string[] = [];
 
         if (workspaces && workspaces.length > 0) {
           workspaceIds = workspaces.map((workspace: any) => workspace.id);
         } else {
-          // Fallback to localStorage if no workspaces in store
           const storedWorkspaces = localStorage.getItem("recentWorkspaces");
           if (storedWorkspaces) {
             try {
@@ -46,7 +44,6 @@ function YourTasks() {
           }
         }
 
-        // Collect tasks from each workspace
         const tasks: Task[] = [];
 
         for (const workspaceId of workspaceIds) {
@@ -55,7 +52,6 @@ function YourTasks() {
           if (workspaceData && workspaceData.workspace) {
             const { title: workspaceName, columns } = workspaceData.workspace;
 
-            // Collect tasks from each column
             columns.forEach((column: any) => {
               const columnName = column.title;
 
@@ -87,7 +83,6 @@ function YourTasks() {
     getAllTasks();
   }, [workspaces]);
 
-  // Helper function to fetch workspace data from Kanban Store
   const fetchWorkspaceData = async (workspaceId: string) => {
     const { fetchData } = useKanbanStore.getState();
     try {
@@ -142,7 +137,7 @@ function YourTasks() {
   return (
     <div className="space-y-2 pb-8">
       <h2 className="text-lg font-medium">Your Tasks</h2>
-      <div className="space-y-2">
+      <div className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
         {allTasks.map((task) => (
           <div
             key={task.id}
