@@ -5,6 +5,7 @@ export interface Card {
   id: string;
   title: string;
   description: string;
+  createdAt?: string;
 }
 
 export interface Column {
@@ -27,10 +28,10 @@ export const useKanbanStore = create<storeState>((set) => ({
   data: null,
   loading: false,
   error: null,
-  
+
   fetchData: async (workspaceId: string) => {
     if (!workspaceId) return;
-    
+
     set({ loading: true, error: null });
     try {
       const response = await fetch(

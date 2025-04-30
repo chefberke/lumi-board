@@ -3,6 +3,7 @@
 import { Calendar, Home, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { NotificationBadge } from "./notification-badge";
 
 import {
   Sidebar,
@@ -32,7 +33,7 @@ const items = [
     title: "Inbox",
     url: "/dashboard/inbox",
     icon: Inbox,
-    live: false,
+    live: true,
   },
   {
     title: "Calendar",
@@ -72,6 +73,7 @@ export function AppSidebar() {
                     >
                       <item.icon />
                       <span>{item.title}</span>
+                      {item.title === "Inbox" && <NotificationBadge />}
                       {!item.live && (
                         <span className="bg-lumi text-white rounded-md px-1 py-0.5 font-medium text-xs">
                           Soon
