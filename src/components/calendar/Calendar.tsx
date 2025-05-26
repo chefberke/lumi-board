@@ -15,14 +15,12 @@ import {
 } from "@/components/ui/dialog";
 import { KanbanWorkspace } from "@/stores/kanbanStore";
 
-// Date-fns localizer için gerekli fonksiyonlar
 import { dateFnsLocalizer } from "react-big-calendar";
 
 const locales = {
   tr: tr,
 };
 
-// Date-fns localizer oluşturma
 const localizer = dateFnsLocalizer({
   format,
   parse,
@@ -58,7 +56,6 @@ const KanbanCalendar: React.FC<CalendarProps> = ({ workspaces = [] }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
-    // Tüm çalışma alanlarından kartları toplama
     const allTasks: Task[] = [];
 
     if (!workspaces || workspaces.length === 0) {
@@ -72,10 +69,8 @@ const KanbanCalendar: React.FC<CalendarProps> = ({ workspaces = [] }) => {
           if (column && column.cards) {
             column.cards.forEach((card) => {
               if (card && card.createdAt) {
-                // Kartın tarihini Date nesnesine dönüştürme
                 const createdDate = new Date(card.createdAt);
 
-                // Etkinlik olarak ekle
                 allTasks.push({
                   ...card,
                   start: createdDate,
@@ -101,7 +96,6 @@ const KanbanCalendar: React.FC<CalendarProps> = ({ workspaces = [] }) => {
     setSelectedEvent(null);
   };
 
-  // Etkinlik stilini özelleştirme
   const eventStyleGetter = (event: Task) => {
     return {
       style: {

@@ -2,7 +2,6 @@ import { KanbanWorkspace } from "@/stores/kanbanStore";
 
 export async function getAllWorkspacesWithTasks(): Promise<KanbanWorkspace[]> {
   try {
-    // Önce tüm çalışma alanlarını getir
     const workspacesResponse = await fetch('http://localhost:3000/api/workspaces/getWorkspaces', {
       method: 'GET',
     });
@@ -14,7 +13,6 @@ export async function getAllWorkspacesWithTasks(): Promise<KanbanWorkspace[]> {
     const workspacesData = await workspacesResponse.json();
     const workspaces = workspacesData.workspaces || [];
 
-    // Her çalışma alanı için detaylı bilgileri getir
     const workspacesWithTasks = await Promise.all(
       workspaces.map(async (workspace: any) => {
         try {
@@ -36,7 +34,6 @@ export async function getAllWorkspacesWithTasks(): Promise<KanbanWorkspace[]> {
       })
     );
 
-    // null değerleri filtrele
     return workspacesWithTasks.filter(Boolean) as KanbanWorkspace[];
   } catch (error) {
     console.error('Error fetching all workspaces with tasks:', error);

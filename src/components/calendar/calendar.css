@@ -1,4 +1,3 @@
-/* Takvim bileşeni için özel stiller */
 .rbc-calendar-custom {
   width: 100%;
   font-family: system-ui, -apple-system, sans-serif;
@@ -7,29 +6,24 @@
   flex: 1;
 }
 
-/* Takvim hücrelerinin yüksekliğini artırma */
 .rbc-calendar-custom .rbc-month-view .rbc-month-row {
   min-height: 100px;
 }
 
-/* Hücre içeriği için daha fazla boşluk */
 .rbc-calendar-custom .rbc-event {
   padding: 4px 6px;
   margin: 2px 0;
 }
 
-/* Hücre başlıkları için daha iyi okunabilirlik */
 .rbc-calendar-custom .rbc-header {
   padding: 8px 3px;
   font-weight: 500;
 }
 
-/* Bugünün tarihini vurgulama */
 .rbc-calendar-custom .rbc-today {
   background-color: rgba(75, 78, 231, 0.05);
 }
 
-/* Takvim kenarlarını yumuşatma */
 .rbc-calendar-custom .rbc-month-view,
 .rbc-calendar-custom .rbc-time-view {
   border-radius: 8px;
