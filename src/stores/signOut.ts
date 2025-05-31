@@ -1,4 +1,6 @@
+import axios from "axios";
 import { WorkspaceState } from "@/types/workspace";
+import { API_URL } from "@/lib/config";
 import { create } from "zustand";
 
 export const signOut = create<WorkspaceState>((set) => ({
@@ -9,16 +11,7 @@ export const signOut = create<WorkspaceState>((set) => ({
   fetchData: async () => {
     set({ error: null });
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/auth/logout`,
-        {
-          method: "POST",
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-      }
+      await axios.post(`${API_URL}/api/auth/logout`);
     } catch (error: any) {
       set({ error: error.message });
     }

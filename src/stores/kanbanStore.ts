@@ -1,28 +1,7 @@
-import { create } from 'zustand';
-import { WorkspaceState } from '@/types/workspace';
-
-export interface Card {
-  id: string;
-  title: string;
-  description: string;
-  createdAt?: string;
-}
-
-export interface Column {
-  id: string;
-  title: string;
-  cards: Card[];
-}
-
-export interface KanbanWorkspace {
-  id: string;
-  title: string;
-  columns: Column[];
-}
-
-export interface KanbanData {
-  workspace: KanbanWorkspace;
-}
+import axios from "axios";
+import { create } from "zustand";
+import { API_URL } from "@/lib/config";
+import { WorkspaceState } from "@/types/workspace";
 
 export const useKanbanStore = create<WorkspaceState>((set) => ({
   data: null,
@@ -34,19 +13,8 @@ export const useKanbanStore = create<WorkspaceState>((set) => ({
 
     set({ loading: true, error: null });
     try {
-      const response = await fetch(
-        `/api/workspaces/${workspaceId}`,
-        {
-          method: 'GET',
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to fetch: ${response.status}`);
-      }
-
-      const data: KanbanData = await response.json();
-      set({ data, loading: false });
+      const response = await axios.get(`${API_URL}/api/workspaces/${workspaceId}`);
+      set({ data: response.data, loading: false });
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }

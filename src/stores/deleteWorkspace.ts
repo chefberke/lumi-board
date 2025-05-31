@@ -1,5 +1,7 @@
 import { WorkspaceState } from "@/types/workspace";
+import { API_URL } from "@/lib/config";
 import { create } from "zustand";
+import axios from 'axios';
 
 export const delWorkspace = create<WorkspaceState>((set) => ({
   error: null,
@@ -7,24 +9,8 @@ export const delWorkspace = create<WorkspaceState>((set) => ({
   fetchData: async (id: String) => {
     set({ error: null });
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/workspaces/deleteWorkspace`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({id})
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Failed to patch: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      return data;
+      const response = await axios.delete(`${API_URL}/api/workspaces/deleteWorkspace`, { data: { id } });
+      return response.data;
     } catch (error: any) {
       set({ error: error.message });
       throw error;

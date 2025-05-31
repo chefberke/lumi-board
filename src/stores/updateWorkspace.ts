@@ -1,4 +1,6 @@
+import axios from "axios";
 import { WorkspaceState } from "@/types/workspace";
+import { API_URL } from "@/lib/config";
 import { create } from "zustand";
 
 export const updateWorkspace = create<WorkspaceState>((set) => ({
@@ -7,24 +9,12 @@ export const updateWorkspace = create<WorkspaceState>((set) => ({
   fetchData: async (id: String, name: String) => {
     set({ error: null });
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/workspaces/updateWorkspace`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id, title: name })
-        }
-      );
+      const response = await axios.patch(`${API_URL}/api/workspaces/updateWorkspace`, {
+        id,
+        title: name,
+      });
 
-      if (!response.ok) {
-        throw new Error(`Failed to patch: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      return data;
+      return response.data;
     } catch (error: any) {
       set({ error: error.message });
       throw error;
