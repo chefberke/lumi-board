@@ -30,11 +30,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     }
 
     // Find all columns for this project
-    const columns = await Column.find({ projectId: id }).sort({ order: 1 }).lean();
+    const columns = (await Column.find({ projectId: id }).sort({ order: 1 }).lean() as unknown) as IColumn[];
 
     // Get all items for all columns
     const columnIds = columns.map(col => col._id);
-    const items = await Item.find({ columnId: { $in: columnIds } }).lean();
+    const items = (await Item.find({ columnId: { $in: columnIds } }).lean() as unknown) as IItem[];
 
     // Group items by column
     const columnsWithCards = columns.map(column => {
@@ -94,11 +94,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     }
 
     // Mevcut tüm kolonları ve kartları al
-    const existingColumns = await Column.find({ projectId: id }).lean();
+    const existingColumns = (await Column.find({ projectId: id }).lean() as unknown) as IColumn[];
     const existingColumnIds = existingColumns.map(col => col._id.toString());
 
     // Mevcut tüm kartları al
-    const existingItems = await Item.find({ columnId: { $in: existingColumnIds } }).lean();
+    const existingItems = (await Item.find({ columnId: { $in: existingColumnIds } }).lean() as unknown) as IItem[];
 
     // Gönderilen kartların ID'lerini topla
     const updatedCardIds = new Set();

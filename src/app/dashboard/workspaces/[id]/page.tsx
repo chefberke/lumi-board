@@ -53,14 +53,17 @@ function WorkspacePage() {
   useEffect(() => {
     if (workspaceId) {
       fetchData(workspaceId);
-      saveRecentWorkspace(workspaceId, workspaceName);
     }
-  }, [workspaceId, workspaceName, fetchData]);
-
-  console.log(data);
+  }, [workspaceId, fetchData]);
 
   useEffect(() => {
-    if (data && data.workspace) {
+    if (workspaceName) {
+      saveRecentWorkspace(workspaceId, workspaceName);
+    }
+  }, [workspaceId, workspaceName]);
+
+  useEffect(() => {
+    if (data?.workspace) {
       const user = getUser();
       if (user && user.id === data.workspace.ownerId) {
         setIsAuthorized(true);
@@ -79,7 +82,7 @@ function WorkspacePage() {
     );
   }
 
-  if (!data || !data.workspace || !isAuthorized) {
+  if (!data?.workspace || !isAuthorized) {
     return (
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Workspace not found</h1>
@@ -90,7 +93,6 @@ function WorkspacePage() {
 
   return (
     <div className="h-full">
-      {/* <h1 className="text-2xl font-bold mb-4">{data.workspace.title}</h1> */}
       <KanbanBoard columns={data.workspace.columns} />
     </div>
   );

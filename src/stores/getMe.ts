@@ -1,10 +1,10 @@
 import axios from "axios";
-import { WorkspaceState } from "@/types/workspace";
+import { UserState } from "@/types/workspace";
 import { API_URL } from "@/lib/config";
 import { create } from "zustand";
 
-export const getMe = create<WorkspaceState>((set) => ({
-  data: [],
+export const getMe = create<UserState>((set) => ({
+  data: null,
   loading: true,
   error: null,
 

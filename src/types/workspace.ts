@@ -1,15 +1,33 @@
+import { Column } from '@/types/kanban';
+
 export interface Workspace {
   _id: string;
   title: string;
   owner: string;
-  columns: string[];
+  ownerId: string;
+  columns: Column[];
   createdAt: string;
   updatedAt: string;
 }
 
 export interface WorkspaceState {
-  data?: any[] | null;
-  loading?: boolean;
+  data: {
+    workspace: Workspace;
+  } | null;
+  loading: boolean;
   error: string | null;
-  fetchData: (...args: any[]) => Promise<void>;
+  fetchData: (workspaceId: string) => Promise<void>;
+  saveChanges: (workspaceId: string, columns: Column[]) => Promise<any>;
+}
+
+export interface UserState {
+  data: {
+    user: {
+      username: string;
+      email: string;
+    };
+  } | null;
+  loading: boolean;
+  error: string | null;
+  fetchData: () => Promise<void>;
 }
