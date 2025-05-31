@@ -17,9 +17,9 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { createWorkspace } from "@/stores/createWorkspace";
-import { Input } from "./input";
+import { Input } from "@/components/ui/input";
 
-function CreateWorkspace() {
+function WorkspaceCreateDialog() {
   const [workspaceName, setWorkspaceName] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const { error, fetchData } = createWorkspace();
@@ -115,4 +115,4 @@ function CreateWorkspace() {
   );
 }
 
-export default CreateWorkspace;
+export default WorkspaceCreateDialog;

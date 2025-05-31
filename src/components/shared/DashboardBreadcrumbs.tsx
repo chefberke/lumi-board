@@ -26,7 +26,7 @@ interface PathCrumbProps {
   homeUrl?: string;
 }
 
-function PathCrumb({
+function DashboardBreadcrumbs({
   customTitles = {},
   homeTitle = "Home",
   homeUrl = "/dashboard",
@@ -85,4 +85,4 @@ function PathCrumb({
   );
 }
 
-export default PathCrumb;
+export default DashboardBreadcrumbs;

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 import OnboardingLogo from "@/assets/logo_classic.svg";
 
-const Onboarding = () => {
+const OnboardingGuide = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -145,4 +145,4 @@ const Onboarding = () => {
   );
 };
 
-export default Onboarding;
+export default OnboardingGuide;

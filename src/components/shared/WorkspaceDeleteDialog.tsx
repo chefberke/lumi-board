@@ -19,7 +19,7 @@ import { toast } from "@/hooks/use-toast";
 import { getWorkspaces } from "@/stores/getWorkspace";
 import { useRouter } from "next/navigation";
 
-function DeleteWorkspace({ id, title }: { id: string; title: string }) {
+function WorkspaceDeleteDialog({ id, title }: { id: string; title: string }) {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -89,4 +89,4 @@ function DeleteWorkspace({ id, title }: { id: string; title: string }) {
   );
 }
 
-export default DeleteWorkspace;
+export default WorkspaceDeleteDialog;

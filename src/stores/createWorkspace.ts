@@ -1,11 +1,11 @@
-import { storeState } from "@/types/storeState";
+import { WorkspaceState } from "@/types/workspace";
 import { create } from "zustand";
 
 export const workspaceEvents = {
   onWorkspaceCreated: null as null | (() => void),
 };
 
-export const createWorkspace = create<storeState>((set) => ({
+export const createWorkspace = create<WorkspaceState>((set) => ({
   error: null,
 
   fetchData: async (title: String) => {
@@ -27,17 +27,17 @@ export const createWorkspace = create<storeState>((set) => ({
       }
 
       const data = await response.json();
-      
+
       // Trigger workspace created event
       setTimeout(() => {
         if (workspaceEvents.onWorkspaceCreated) {
           workspaceEvents.onWorkspaceCreated();
         }
       }, 0);
-      
+
       return data;
     } catch (error: any) {
-      set({ error: error.message }); 
+      set({ error: error.message });
       throw error;
     }
   },

@@ -1,7 +1,7 @@
-import { storeState } from "@/types/storeState";
+import { WorkspaceState } from "@/types/workspace";
 import { create } from "zustand";
 
-export const updateWorkspace = create<storeState>((set) => ({
+export const updateWorkspace = create<WorkspaceState>((set) => ({
   error: null,
 
   fetchData: async (id: String, name: String) => {

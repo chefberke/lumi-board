@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn } from "@/lib/api";
-import { setUser } from "@/lib/auth";
+import { signIn } from "@/lib/auth";
+import { setUser } from "@/lib/authClient";
 import Logo from "@/assets/logo.svg";
 
 import { GoArrowUpRight } from "react-icons/go";

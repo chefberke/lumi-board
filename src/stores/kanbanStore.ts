@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { storeState } from '@/types/storeState';
+import { WorkspaceState } from '@/types/workspace';
 
 export interface Card {
   id: string;
@@ -24,7 +24,7 @@ export interface KanbanData {
   workspace: KanbanWorkspace;
 }
 
-export const useKanbanStore = create<storeState>((set) => ({
+export const useKanbanStore = create<WorkspaceState>((set) => ({
   data: null,
   loading: false,
   error: null,

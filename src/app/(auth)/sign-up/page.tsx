@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/api";
+import { signUp } from "@/lib/auth";
 import Logo from "@/assets/logo.svg";
 import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";

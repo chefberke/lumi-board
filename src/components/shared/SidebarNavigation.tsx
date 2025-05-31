@@ -3,7 +3,6 @@
 import { Calendar, Home, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { NotificationBadge } from "./notification-badge";
 
 import {
   Sidebar,
@@ -18,8 +17,8 @@ import {
 
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
-import SidebarFooters from "./sidebar-footer";
-import Workspaces from "@/components/ui/workspaces";
+import UserSettingsFooter from "@/components/shared/UserSettingsFooter";
+import WorkspaceList from "@/components/shared/WorkspaceList";
 
 // Menu items.
 const items = [
@@ -43,7 +42,7 @@ const items = [
   },
 ];
 
-export function AppSidebar() {
+export function SidebarNavigation() {
   const pathname = usePathname();
 
   return (
@@ -73,7 +72,6 @@ export function AppSidebar() {
                     >
                       <item.icon />
                       <span>{item.title}</span>
-                      {item.title === "Inbox" && <NotificationBadge />}
                       {!item.live && (
                         <span className="bg-lumi text-white rounded-md px-1 py-0.5 font-medium text-xs">
                           Soon
@@ -87,10 +85,10 @@ export function AppSidebar() {
           </SidebarMenu>
         </SidebarGroupContent>
 
-        <Workspaces />
+        <WorkspaceList />
       </SidebarContent>
 
-      <SidebarFooters />
+      <UserSettingsFooter />
     </Sidebar>
   );
 }

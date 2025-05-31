@@ -1,7 +1,7 @@
-import { storeState } from "@/types/storeState";
+import { WorkspaceState } from "@/types/workspace";
 import { create } from "zustand";
 
-export const signOut = create<storeState>((set) => ({
+export const signOut = create<WorkspaceState>((set) => ({
   data: [],
   loading: true,
   error: null,
@@ -20,7 +20,7 @@ export const signOut = create<storeState>((set) => ({
         throw new Error(`Failed to fetch: ${response.status}`);
       }
     } catch (error: any) {
-      set({ error: error.message }); 
+      set({ error: error.message });
     }
   },
 }));

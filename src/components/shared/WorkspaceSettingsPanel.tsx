@@ -18,10 +18,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Ellipsis, UserRound } from "lucide-react";
-import RenameWorkspace from "@/components/ui/rename-workspace";
-import DeleteWorkspace from "@/components/ui/delete-workspace";
+import WorkspaceRenameDialog from "@/components/shared/WorkspaceRenameDialog";
+import WorkspaceDeleteDialog from "@/components/shared/WorkspaceDeleteDialog";
 
-function SettingsWorkspace({ title, id }: any) {
+function WorkspaceSettingsPanel({ title, id }: any) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -31,8 +31,8 @@ function SettingsWorkspace({ title, id }: any) {
         <DropdownMenuLabel>{title}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <RenameWorkspace id={id} title={title} />
-        <DeleteWorkspace id={id} title={title} />
+        <WorkspaceRenameDialog id={id} title={title} />
+        <WorkspaceDeleteDialog id={id} title={title} />
 
         <DropdownMenuItem disabled className="hover:cursor-not-allowed">
           <UserRound className="mr-2" />
@@ -46,4 +46,4 @@ function SettingsWorkspace({ title, id }: any) {
   );
 }
 
-export default SettingsWorkspace;
+export default WorkspaceSettingsPanel;

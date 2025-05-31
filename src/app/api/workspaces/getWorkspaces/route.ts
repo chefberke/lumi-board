@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
-        
+
         const workspaces = await Project.find({ owner: decoded.userId })
             .sort({ createdAt: -1 });
 
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
 
     } catch (error) {
         console.error('GetWorkspaces error:', error);
-        
+
         if (error instanceof jwt.JsonWebTokenError) {
             return NextResponse.json(
                 { message: "Invalid token" },

@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import CreateWorkspace from "@/components/ui/create-workspace";
+import WorkspaceCreateDialog from "@/components/shared/WorkspaceCreateDialog";
 import { getWorkspaces } from "@/stores/getWorkspace";
 import { workspaceEvents } from "@/stores/createWorkspace";
 import { useToast } from "@/hooks/use-toast";
@@ -19,9 +19,9 @@ import { Workspace } from "@/types/workspace";
 import { usePathname } from "next/navigation";
 import { Folder } from "lucide-react";
 import Link from "next/link";
-import SettingsWorkspace from "@/components/ui/settings-workspace";
+import WorkspaceSettingsPanel from "@/components/shared/WorkspaceSettingsPanel";
 
-function workspaces() {
+function WorkspaceList() {
   const { data, loading, error, fetchData } = getWorkspaces();
   const { toast } = useToast();
   const pathname = usePathname();
@@ -55,7 +55,7 @@ function workspaces() {
     <SidebarContent>
       <SidebarGroupLabel className="w-full flex justify-between">
         <p>Projects</p>
-        <CreateWorkspace />
+        <WorkspaceCreateDialog />
       </SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
@@ -77,7 +77,7 @@ function workspaces() {
                         <div className="flex items-center justify-between w-full">
                           {workspace.title || "Unknown"}
                           <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                            <SettingsWorkspace
+                            <WorkspaceSettingsPanel
                               title={workspace.title}
                               id={workspace._id}
                             />
@@ -95,4 +95,4 @@ function workspaces() {
   );
 }
 
-export default workspaces;
+export default WorkspaceList;

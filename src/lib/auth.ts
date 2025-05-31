@@ -1,42 +1,46 @@
-export interface User {
-  id?: string;
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+
+interface SignUpData {
   email: string;
-  name?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  password: string;
+  username: string;
 }
 
-export function setUser(userData: User) {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('user', JSON.stringify(userData));
+interface SignInData {
+  email: string;
+  password: string;
+}
+
+export async function signUp(data: SignUpData) {
+  const response = await fetch(`${API_URL}/api/auth/sign-up`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error');
   }
+
+  return response.json();
 }
 
-export function getUser(): User | null {
-  if (typeof window !== 'undefined') {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+export async function signIn(data: SignInData) {
+  const response = await fetch(`${API_URL}/api/auth/sign-in`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error');
   }
-  return null;
+
+  return response.json();
 }
-
-export function removeUser() {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('user');
-  }
-}
-
-export function isAuthenticated(): boolean {
-  if (typeof window === 'undefined') return false;
-  const user = getUser();
-  return user !== null;
-}
-
-export async function logout() {
-  if (typeof window !== 'undefined') {
-    removeUser();
-    document.cookie = 'jwt=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-  }
-}
-
-

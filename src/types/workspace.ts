@@ -8,10 +8,8 @@ export interface Workspace {
 }
 
 export interface WorkspaceState {
-  data: {
-    workspaces: Workspace[];
-  } | null;
-  loading: boolean;
+  data?: any[] | null;
+  loading?: boolean;
   error: string | null;
-  fetchData: () => Promise<void>;
+  fetchData: (...args: any[]) => Promise<void>;
 }

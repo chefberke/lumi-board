@@ -1,7 +1,7 @@
-import { storeState } from "@/types/storeState";
+import { WorkspaceState } from "@/types/workspace";
 import { create } from "zustand";
 
-export const getWorkspaces = create<storeState>((set) => ({
+export const getWorkspaces = create<WorkspaceState>((set) => ({
   data: [],
   loading: true,
   error: null,
@@ -23,7 +23,7 @@ export const getWorkspaces = create<storeState>((set) => ({
       const data = await response.json();
       set({ data, loading: false });
     } catch (error: any) {
-      set({ error: error.message, loading: false }); 
+      set({ error: error.message, loading: false });
     }
   },
 }));

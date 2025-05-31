@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import KanbanBoard from "@/components/kanban/Columns";
 import { useKanbanStore } from "@/stores/kanbanStore";
-import { getUser } from "@/lib/auth";
+import { getUser } from "@/lib/authClient";
 import { useRouter } from "next/navigation";
 
 function WorkspacePage() {

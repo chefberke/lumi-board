@@ -26,7 +26,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-function SidebarFooters() {
+function UserSettingsFooter() {
   const { data, error, fetchData } = getMe();
   const { toast } = useToast();
 
@@ -127,4 +127,4 @@ function SidebarFooters() {
   );
 }
 
-export default SidebarFooters;
+export default UserSettingsFooter;

@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import { storeState } from '@/types/storeState';
+import { WorkspaceState } from '@/types/workspace';
 import { KanbanWorkspace } from './kanbanStore';
 
 export interface WorkspacesData {
   workspaces: KanbanWorkspace[];
 }
 
-export const useWorkspacesStore = create<storeState>((set) => ({
+export const useWorkspacesStore = create<WorkspaceState>((set) => ({
   data: null,
   loading: false,
   error: null,

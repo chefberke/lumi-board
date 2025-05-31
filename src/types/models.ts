@@ -29,3 +29,11 @@ export interface IItem {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IUser {
+  _id: Types.ObjectId;
+  username: string;
+  email: string;
+  password: string;
+  projects: IProject[];
+}

@@ -7,7 +7,7 @@ import { updateWorkspace } from "@/stores/updateWorkspace";
 import { getWorkspaces } from "@/stores/getWorkspace";
 import { toast } from "@/hooks/use-toast";
 
-function RenameWorkspace({ id, title }: { id: string; title: string }) {
+function WorkspaceRenameDialog({ id, title }: { id: string; title: string }) {
   const [showModal, setShowModal] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -145,4 +145,4 @@ function RenameWorkspace({ id, title }: { id: string; title: string }) {
   );
 }
 
-export default RenameWorkspace;
+export default WorkspaceRenameDialog;
