@@ -5,6 +5,9 @@ import { SidebarNavigation } from "@/components/shared/SidebarNavigation";
 import DashboardBreadcrumbs from "@/components/shared/DashboardBreadcrumbs";
 import OnboardingGuide from "@/components/shared/OnboardingGuide";
 import { useEffect } from "react";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { usePathname, useSearchParams } from "next/navigation";
 
 function ThemeInitializer() {
   useEffect(() => {
@@ -18,6 +21,18 @@ function ThemeInitializer() {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    NProgress.configure({ showSpinner: false });
+  }, []);
+
+  useEffect(() => {
+    NProgress.start();
+    NProgress.done();
+  }, [pathname, searchParams]);
+
   return (
     <SidebarProvider>
       <ThemeInitializer />

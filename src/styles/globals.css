@@ -108,3 +108,8 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+#nprogress .bar {
+  background: #4b4ee7 !important;
+  height: 1px !important;
+}

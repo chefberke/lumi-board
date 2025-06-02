@@ -6,6 +6,7 @@ import KanbanBoard from "@/components/kanban/Columns";
 import { useKanbanStore } from "@/stores/kanbanStore";
 import { getUser } from "@/lib/authClient";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function WorkspacePage() {
   const params = useParams();
@@ -76,8 +77,10 @@ function WorkspacePage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary dark:border-neutral-400"></div>
+      <div className="flex h-full gap-4">
+        <Skeleton className="w-[300px] h-full" />
+        <Skeleton className="w-[300px] h-full" />
+        <Skeleton className="w-[300px] h-full" />
       </div>
     );
   }
