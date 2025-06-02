@@ -28,7 +28,7 @@ function WorkspaceList() {
 
   useEffect(() => {
     const fetchAllWorkspaces = async () => {
-      await fetchData();
+      await fetchData?.();
     };
     fetchAllWorkspaces();
 
@@ -59,8 +59,8 @@ function WorkspaceList() {
       </SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {data && data?.workspaces?.length > 0
-            ? data?.workspaces.map((workspace: Workspace) => {
+          {data && data?.workspaces
+            ? data?.workspaces?.map((workspace: Workspace) => {
                 const isActive = pathname.includes(
                   `/dashboard/workspaces/${workspace._id}`
                 );
@@ -70,7 +70,9 @@ function WorkspaceList() {
                       <Link
                         href={`/dashboard/workspaces/${workspace._id}`}
                         className={`group flex items-center gap-2 w-full p-2 rounded-md transition-all ${
-                          isActive ? "bg-gray-100" : ""
+                          isActive
+                            ? "bg-gray-100 dark:bg-neutral-800 dark:text-white"
+                            : "dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
                         }`}
                       >
                         <Folder />

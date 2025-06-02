@@ -11,13 +11,14 @@ export interface Workspace {
 }
 
 export interface WorkspaceState {
-  data: {
-    workspace: Workspace;
+  data?: {
+    workspaces?: Workspace[];
+    workspace?: Workspace;
   } | null;
-  loading: boolean;
-  error: string | null;
-  fetchData: (workspaceId: string) => Promise<void>;
-  saveChanges: (workspaceId: string, columns: Column[]) => Promise<any>;
+  loading?: boolean;
+  error?: string | null;
+  fetchData?: (workspaceId?: string) => Promise<void>;
+  saveChanges?: (workspaceId: string, columns: Column[]) => Promise<any>;
 }
 
 export interface UserState {
