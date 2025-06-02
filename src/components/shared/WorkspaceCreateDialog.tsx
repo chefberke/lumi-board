@@ -73,7 +73,7 @@ function WorkspaceCreateDialog() {
         <button type="button">
           <Plus
             size={14}
-            className="hover:text-black hover:cursor-pointer transition-all"
+            className="hover:text-black hover:cursor-pointer transition-all dark:hover:text-neutral-600"
           />
         </button>
       </DialogTrigger>
@@ -106,7 +106,12 @@ function WorkspaceCreateDialog() {
               Close
             </Button>
           </DialogClose>
-          <Button variant="default" size={"sm"} onClick={handleCreateWorkspace}>
+          <Button
+            variant="default"
+            size={"sm"}
+            className="bg-lumi"
+            onClick={handleCreateWorkspace}
+          >
             Create
           </Button>
         </DialogFooter>

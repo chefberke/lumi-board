@@ -155,10 +155,21 @@ export default function KanbanBoard({
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+            <Button
+              variant="outline"
+              size={"sm"}
+              onClick={() => setIsDialogOpen(false)}
+            >
               Cancel
             </Button>
-            <Button onClick={handleAddCard}>Add</Button>
+            <Button
+              onClick={handleAddCard}
+              variant="default"
+              size={"sm"}
+              className="bg-lumi"
+            >
+              Add
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

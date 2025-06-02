@@ -23,7 +23,7 @@ export default function RootLayout({
       {/* <head>
         <script src="https://unpkg.com/react-scan/dist/auto.global.js" />
       </head> */}
-      <body className={` ${font.className}`}>
+      <body className={`${font.className}`}>
         {children}
         <Toaster />
       </body>

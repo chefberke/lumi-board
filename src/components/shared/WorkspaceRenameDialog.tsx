@@ -102,14 +102,17 @@ function WorkspaceRenameDialog({ id, title }: { id: string; title: string }) {
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div ref={modalRef} className="bg-white rounded-lg p-6 shadow-lg">
+          <div
+            ref={modalRef}
+            className="bg-white rounded-lg p-6 shadow-lg dark:bg-neutral-900"
+          >
             <h2 className="text-xl font-semibold mb-2">Rename Workspace</h2>
-            <p className="text-neutral-600 text-sm mb-4">
+            <p className="text-neutral-600 text-sm mb-4 dark:text-neutral-300">
               Enter a new name for your workspace. This action cannot be undone.
             </p>
 
             <div className="mb-4">
-              <label className="text-sm text-neutral-700 block mb-2">
+              <label className="text-sm text-neutral-700 block mb-2 dark:text-neutral-100">
                 New workspace name
               </label>
               <Input
