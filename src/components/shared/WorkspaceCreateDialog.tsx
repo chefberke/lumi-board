@@ -36,7 +36,7 @@ function WorkspaceCreateDialog() {
     }
 
     try {
-      await fetchData(workspaceName);
+      await fetchData?.(workspaceName);
 
       toast({
         variant: "success",

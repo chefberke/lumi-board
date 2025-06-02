@@ -17,7 +17,7 @@ export interface WorkspaceState {
   } | null;
   loading?: boolean;
   error?: string | null;
-  fetchData?: (workspaceId?: string) => Promise<void>;
+  fetchData?: (workspaceId?: string, workspaceIds?: string) => Promise<void>;
   saveChanges?: (workspaceId: string, columns: Column[]) => Promise<any>;
 }
 

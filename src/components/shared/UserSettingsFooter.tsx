@@ -50,7 +50,7 @@ function UserSettingsFooter() {
 
   async function signOutFunc() {
     try {
-      await signOut.getState().fetchData();
+      await signOut?.getState()?.fetchData?.();
       localStorage.removeItem("recentWorkspaces");
       localStorage.removeItem("notifications");
       router.push("/sign-in");

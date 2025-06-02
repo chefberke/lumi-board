@@ -27,8 +27,8 @@ function WorkspaceDeleteDialog({ id, title }: { id: string; title: string }) {
   const { fetchData: fetchWorkspaces } = getWorkspaces();
 
   async function handleDelete() {
-    await deleteData(id);
-    await fetchWorkspaces();
+    await deleteData?.(id);
+    await fetchWorkspaces?.();
     toast({
       variant: "destructive",
       title: "Deleted",

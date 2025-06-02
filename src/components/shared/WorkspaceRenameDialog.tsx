@@ -62,8 +62,8 @@ function WorkspaceRenameDialog({ id, title }: { id: string; title: string }) {
       return;
     }
 
-    await renameWorkspace(id, newTitle);
-    await fetchWorkspaces();
+    await renameWorkspace?.(id, newTitle);
+    await fetchWorkspaces?.();
     toast({
       variant: "success",
       title: "Renamed",
