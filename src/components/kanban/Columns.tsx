@@ -81,13 +81,13 @@ export default function KanbanBoard({
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className="bg-gray-50/50 group border border-gray-100/30 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col h-full"
+                      className="bg-gray-50/50 group dark:bg-neutral-900 border border-gray-100/30 dark:border-neutral-900 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col h-full"
                     >
                       <div
                         {...provided.dragHandleProps}
                         className="p-2 border-b border-gray-100/30 cursor-grab active:cursor-grabbing flex-shrink-0"
                       >
-                        <h3 className="pt-1.5 font-semibold text-gray-700 flex w-full justify-between">
+                        <h3 className="pt-1.5 font-semibold text-gray-700 flex w-full justify-between dark:text-neutral-200">
                           <span>{column.title}</span>
                           <div>
                             <Plus
@@ -97,7 +97,7 @@ export default function KanbanBoard({
                             />
                           </div>
                         </h3>
-                        <div className="text-xs text-neutral-600 pt-1">
+                        <div className="text-xs text-neutral-600 pt-1 dark:text-neutral-400">
                           {column.cards.length} tasks
                         </div>
                       </div>

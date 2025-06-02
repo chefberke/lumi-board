@@ -65,7 +65,7 @@ const OnboardingGuide = () => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white w-[470px] h-[440px] rounded-3xl p-8 shadow-lg flex-col items-center overflow-hidden">
+      <div className="bg-white dark:bg-neutral-950 w-[470px] h-[440px] rounded-3xl p-8 shadow-lg flex-col items-center overflow-hidden">
         <div className="relative z-0">
           <div
             className={`absolute w-full h-20 bg-gradient-to-r ${pages[currentPage].color} blur-[100px]`}
@@ -91,11 +91,11 @@ const OnboardingGuide = () => {
           initial={{ translateX: -30 }}
           animate={{ translateX: 0 }}
         >
-          <h2 className="text-xl font-medium mb-2 mt-12">
+          <h2 className="text-xl font-medium mb-2 mt-12 dark:text-white">
             {pages[currentPage].title}
           </h2>
         </motion.div>
-        <p className="mb-3 text-gray-600 text-[15px]">
+        <p className="mb-3 text-gray-600 dark:text-neutral-400 text-[15px]">
           {pages[currentPage].content}
         </p>
 
@@ -103,7 +103,7 @@ const OnboardingGuide = () => {
           {currentPage < pages.length - 1 && (
             <button
               onClick={handleNext}
-              className="bg-black px-5 py-1 text-white rounded-lg hover:bg-neutral-900"
+              className="bg-black dark:bg-neutral-800 px-5 py-1 text-white rounded-lg hover:bg-neutral-900 dark:hover:bg-neutral-700"
             >
               Next
             </button>
@@ -112,7 +112,7 @@ const OnboardingGuide = () => {
           {currentPage === pages.length - 1 && (
             <button
               onClick={handleFinish}
-              className="bg-[#4B4EE7] px-5 py-1 text-white rounded-lg hover:bg-[#5b5eef]"
+              className="bg-black dark:bg-neutral-800 px-5 py-1 text-white rounded-lg hover:bg-neutral-900 dark:hover:bg-neutral-700"
             >
               Finish
             </button>

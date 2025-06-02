@@ -32,7 +32,7 @@ function Items({ card, index, user, onDelete }: CardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
+          className={`dark:bg-neutral-950 dark:border-none mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
             snapshot.isDragging
               ? "shadow-lg ring-2 ring-primary opacity-100 backdrop-blur-md"
               : ""
@@ -44,13 +44,13 @@ function Items({ card, index, user, onDelete }: CardProps) {
           }}
         >
           <div className="flex justify-between items-start mb-1 group">
-            <h4 className="font-medium text-gray-800 text-sm md:text-base">
+            <h4 className="font-medium text-gray-800 text-sm md:text-base dark:text-neutral-300">
               {card.title}
             </h4>
             {onDelete && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-1 rounded-full hover:bg-gray-100 opacity-0 group-hover:opacity-100">
+                  <button className="text-neutral-400 hover:text-neutral-600 transition-colors p-1 rounded-full hover:bg-gray-100  dark:hover:bg-transparent opacity-0 group-hover:opacity-100">
                     <Ellipsis size={16} />
                   </button>
                 </DropdownMenuTrigger>
@@ -69,15 +69,17 @@ function Items({ card, index, user, onDelete }: CardProps) {
 
           <p className="text-xs md:text-sm text-gray-600">{card.description}</p>
           <div className="flex justify-between w-full items-center pt-1 gap-2">
-            <p className="text-neutral-600 text-xs font-normal">
+            <p className="text-neutral-600 text-xs font-normal dark:text-neutral-400">
               {formattedDate}
             </p>
             <div className="flex items-center gap-1.5">
-              <p className="text-neutral-700 text-sm">{user.user.username}</p>
+              <p className="text-neutral-700 text-sm dark:text-neutral-300">
+                {user.user.username}
+              </p>
               <Image
                 src="https://cdn.jsdelivr.net/gh/alohe/avatars/png/notion_1.png"
                 alt="user-image"
-                className="rounded-full border-2 border-neutral-700"
+                className="rounded-full border-2 border-neutral-700 dark:border-neutral-300"
                 width={25}
                 height={25}
               />

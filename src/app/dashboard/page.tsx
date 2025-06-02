@@ -1,3 +1,4 @@
+import ThemeToggle from "@/components/shared/Theme";
 import React from "react";
 
 function Dashboard() {
@@ -5,7 +6,9 @@ function Dashboard() {
     <div>
       <h1 className="text-2xl font-bold mb-4">Home</h1>
 
-      <div className="w-full relative pb-8">deneme</div>
+      <div className="w-full relative pb-8">
+        <ThemeToggle />
+      </div>
     </div>
   );
 }

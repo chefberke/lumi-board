@@ -64,8 +64,8 @@ export function SidebarNavigation() {
                       href={item.url}
                       className={`flex items-center gap-2 w-full p-2 rounded-md transition-all ${
                         isActive
-                          ? "bg-neutral-100 text-neutral-900"
-                          : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900"
+                          ? "bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-white"
+                          : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
                       }
                       ${!item.live && "cursor-not-allowed"}
                       `}

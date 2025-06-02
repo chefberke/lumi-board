@@ -80,7 +80,9 @@ function DashboardBreadcrumbs({
 
   return (
     <Breadcrumb>
-      <BreadcrumbList>{breadcrumbItems}</BreadcrumbList>
+      <BreadcrumbList className="dark:text-neutral-400">
+        {breadcrumbItems}
+      </BreadcrumbList>
     </Breadcrumb>
   );
 }
