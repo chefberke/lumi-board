@@ -19,14 +19,20 @@ export async function GET(req: NextRequest) {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
 
-        const workspaces = await Project.find({ owner: decoded.userId })
-            .sort({ createdAt: -1 });
+        // Find workspaces where user is owner or member
+        const workspaces = await Project.find({
+            $or: [
+                { owner: decoded.userId },
+                { members: decoded.userId }
+            ]
+        }).sort({ createdAt: -1 });
 
         return NextResponse.json({
             workspaces: workspaces.map(workspace => ({
                 _id: workspace._id,
                 title: workspace.title,
                 owner: workspace.owner,
+                members: workspace.members,
                 columns: workspace.columns,
                 createdAt: workspace.createdAt,
                 updatedAt: workspace.updatedAt

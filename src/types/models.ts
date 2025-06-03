@@ -4,6 +4,7 @@ export interface IProject {
   _id: Types.ObjectId;
   title: string;
   owner: Types.ObjectId;
+  members: Types.ObjectId[];
   columns: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;

@@ -16,6 +16,13 @@ const projectSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    members: {
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }],
+      default: []
+    },
     columns: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Column'

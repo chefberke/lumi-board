@@ -57,9 +57,12 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     return NextResponse.json({
       workspace: {
         id: project._id.toString(),
-        ownerId: project.owner,
+        ownerId: project.owner.toString(),
         title: project.title,
-        columns: columnsWithCards
+        members: project.members.map(member => member.toString()),
+        columns: columnsWithCards,
+        createdAt: project.createdAt,
+        updatedAt: project.updatedAt
       }
     });
   } catch (error) {

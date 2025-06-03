@@ -66,7 +66,19 @@ function WorkspacePage() {
   useEffect(() => {
     if (data?.workspace) {
       const user = getUser();
-      if (user && user.id === data.workspace.ownerId) {
+      if (!user) {
+        setIsAuthorized(false);
+        router.push("/dashboard");
+        return;
+      }
+
+      // Check if user is owner or member
+      const isOwner = user.id === data.workspace.ownerId;
+      const isMember = data.workspace.members?.some(
+        (memberId: string) => memberId === user.id
+      );
+
+      if (isOwner || isMember) {
         setIsAuthorized(true);
       } else {
         setIsAuthorized(false);
@@ -92,7 +104,8 @@ function WorkspacePage() {
           Workspace not found
         </h1>
         <p className="dark:text-neutral-400">
-          The requested workspace could not be found.
+          The requested workspace could not be found or you don't have access to
+          it.
         </p>
       </div>
     );

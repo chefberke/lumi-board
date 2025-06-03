@@ -5,6 +5,7 @@ export interface Workspace {
   title: string;
   owner: string;
   ownerId: string;
+  members: string[];
   columns: Column[];
   createdAt: string;
   updatedAt: string;

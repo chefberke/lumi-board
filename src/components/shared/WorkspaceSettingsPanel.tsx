@@ -20,6 +20,7 @@ import {
 import { Ellipsis, UserRound } from "lucide-react";
 import WorkspaceRenameDialog from "@/components/shared/WorkspaceRenameDialog";
 import WorkspaceDeleteDialog from "@/components/shared/WorkspaceDeleteDialog";
+import InviteMemberDialog from "@/components/shared/InviteMemberDialog";
 
 function WorkspaceSettingsPanel({ title, id }: any) {
   return (
@@ -34,13 +35,7 @@ function WorkspaceSettingsPanel({ title, id }: any) {
         <WorkspaceRenameDialog id={id} title={title} />
         <WorkspaceDeleteDialog id={id} title={title} />
 
-        <DropdownMenuItem disabled className="hover:cursor-not-allowed">
-          <UserRound className="mr-2" />
-          <span className="mr-2">Add User</span>
-          {/* <span className="bg-lumi text-white rounded-md px-1 py-0.5 font-medium text-xs">
-            Soon
-          </span> */}
-        </DropdownMenuItem>
+        <InviteMemberDialog id={id} title={title} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
