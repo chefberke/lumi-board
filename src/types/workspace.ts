@@ -33,3 +33,22 @@ export interface UserState {
   error: string | null;
   fetchData: () => Promise<void>;
 }
+
+export interface Invite {
+  id: string;
+  boardId: string;
+  boardName: string;
+  inviterId: string;
+  inviterName: string;
+  status: 'pending' | 'accepted' | 'rejected';
+  createdAt: string;
+}
+
+export interface InviteStore {
+  invites: Invite[];
+  isLoading: boolean;
+  error: string | null;
+  fetchInvites: () => Promise<void>;
+  acceptInvite: (inviteId: string) => Promise<void>;
+  rejectInvite: (inviteId: string) => Promise<void>;
+}

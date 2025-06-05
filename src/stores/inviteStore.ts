@@ -1,24 +1,6 @@
 import { create } from 'zustand';
 import axios from 'axios';
-
-interface Invite {
-  id: string;
-  boardId: string;
-  boardName: string;
-  inviterId: string;
-  inviterName: string;
-  status: 'pending' | 'accepted' | 'rejected';
-  createdAt: string;
-}
-
-interface InviteStore {
-  invites: Invite[];
-  isLoading: boolean;
-  error: string | null;
-  fetchInvites: () => Promise<void>;
-  acceptInvite: (inviteId: string) => Promise<void>;
-  rejectInvite: (inviteId: string) => Promise<void>;
-}
+import { InviteStore } from '@/types/workspace';
 
 export const useInviteStore = create<InviteStore>((set) => ({
   invites: [],
