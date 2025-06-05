@@ -82,6 +82,7 @@ function WorkspaceList() {
                             <WorkspaceSettingsPanel
                               title={workspace.title}
                               id={workspace._id}
+                              ownerId={workspace.owner}
                             />
                           </div>
                         </div>

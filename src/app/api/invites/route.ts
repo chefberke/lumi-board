@@ -25,15 +25,22 @@ export async function GET(req: NextRequest) {
     .populate('invitedBy', 'username')
     .sort({ createdAt: -1 });
 
-    const formattedInvites = invites.map(invite => ({
-      id: invite._id,
-      boardId: invite.workspace._id,
-      boardName: invite.workspace.title,
-      inviterId: invite.invitedBy._id,
-      inviterName: invite.invitedBy.username,
-      status: invite.status,
-      createdAt: invite.createdAt
-    }));
+    const formattedInvites = invites.map(invite => {
+      // Check if workspace and invitedBy exist
+      if (!invite.workspace || !invite.invitedBy) {
+        return null;
+      }
+
+      return {
+        id: invite._id,
+        boardId: invite.workspace._id,
+        boardName: invite.workspace.title,
+        inviterId: invite.invitedBy._id,
+        inviterName: invite.invitedBy.username,
+        status: invite.status,
+        createdAt: invite.createdAt
+      };
+    }).filter(Boolean); // Remove null values
 
     return NextResponse.json(formattedInvites);
   } catch (error) {

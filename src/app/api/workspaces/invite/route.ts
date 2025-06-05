@@ -56,6 +56,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Check if user is trying to invite themselves
+    if (userToInvite._id.toString() === decoded.userId) {
+      return NextResponse.json(
+        { error: 'You cannot invite yourself to your own workspace' },
+        { status: 400 }
+      );
+    }
+
     // Initialize members array if it doesn't exist
     if (!workspace.members) {
       workspace.members = [];

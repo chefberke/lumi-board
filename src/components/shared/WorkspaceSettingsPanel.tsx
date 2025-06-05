@@ -1,4 +1,5 @@
 import React from "react";
+import { getUser } from "@/lib/authClient";
 
 import {
   DropdownMenu,
@@ -21,8 +22,20 @@ import { Ellipsis, UserRound } from "lucide-react";
 import WorkspaceRenameDialog from "@/components/shared/WorkspaceRenameDialog";
 import WorkspaceDeleteDialog from "@/components/shared/WorkspaceDeleteDialog";
 import InviteMemberDialog from "@/components/shared/InviteMemberDialog";
+import LeaveWorkspaceDialog from "@/components/shared/LeaveWorkspaceDialog";
 
-function WorkspaceSettingsPanel({ title, id }: any) {
+function WorkspaceSettingsPanel({
+  title,
+  id,
+  ownerId,
+}: {
+  title: string;
+  id: string;
+  ownerId: string;
+}) {
+  const user = getUser();
+  const isOwner = user?.id === ownerId;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -32,10 +45,15 @@ function WorkspaceSettingsPanel({ title, id }: any) {
         <DropdownMenuLabel>{title}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <WorkspaceRenameDialog id={id} title={title} />
-        <WorkspaceDeleteDialog id={id} title={title} />
-
-        <InviteMemberDialog id={id} title={title} />
+        {isOwner ? (
+          <>
+            <WorkspaceRenameDialog id={id} title={title} />
+            <WorkspaceDeleteDialog id={id} title={title} />
+            <InviteMemberDialog id={id} title={title} />
+          </>
+        ) : (
+          <LeaveWorkspaceDialog id={id} title={title} />
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

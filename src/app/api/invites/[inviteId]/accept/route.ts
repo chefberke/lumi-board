@@ -24,15 +24,18 @@ export async function POST(
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
 
+    // Await params before using
+    const { inviteId } = await Promise.resolve(params);
+
     // Validate ObjectId format
-    if (!Types.ObjectId.isValid(params.inviteId)) {
+    if (!Types.ObjectId.isValid(inviteId)) {
       return NextResponse.json(
         { error: 'Invalid invitation ID format' },
         { status: 400 }
       );
     }
 
-    const invite = await Invite.findById(params.inviteId);
+    const invite = await Invite.findById(inviteId);
     if (!invite) {
       return NextResponse.json(
         { error: 'Invitation not found' },

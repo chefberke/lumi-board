@@ -5,6 +5,7 @@ import { useInviteStore } from "@/stores/inviteStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatDistanceToNow } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 export default function InboxPage() {
   const {
@@ -15,10 +16,37 @@ export default function InboxPage() {
     acceptInvite,
     rejectInvite,
   } = useInviteStore();
+  const { toast } = useToast();
 
   useEffect(() => {
     fetchInvites();
   }, [fetchInvites]);
+
+  const handleAcceptInvite = async (inviteId: string) => {
+    try {
+      await acceptInvite(inviteId);
+      await fetchInvites();
+      toast({
+        title: "Success",
+        description: "Invitation accepted successfully.",
+      });
+    } catch (error: any) {
+      //
+    }
+  };
+
+  const handleRejectInvite = async (inviteId: string) => {
+    try {
+      await rejectInvite(inviteId);
+      await fetchInvites();
+      toast({
+        title: "Success",
+        description: "Invitation rejected successfully.",
+      });
+    } catch (error) {
+      //
+    }
+  };
 
   if (isLoading) {
     return (
@@ -28,13 +56,13 @@ export default function InboxPage() {
     );
   }
 
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen text-red-500">
-        {error}
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-screen text-red-500">
+  //       {error}
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container py-8 px-4">
@@ -96,13 +124,13 @@ export default function InboxPage() {
                       <Button
                         variant={"default"}
                         size={"sm"}
-                        onClick={() => acceptInvite(invite.id)}
+                        onClick={() => handleAcceptInvite(invite.id)}
                         className="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 h-auto text-sm font-medium transition-colors"
                       >
                         Accept
                       </Button>
                       <Button
-                        onClick={() => rejectInvite(invite.id)}
+                        onClick={() => handleRejectInvite(invite.id)}
                         size={"sm"}
                         variant="outline"
                         className="border-red-200 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-500/10 px-3 py-1.5 h-auto text-sm font-medium transition-colors"
