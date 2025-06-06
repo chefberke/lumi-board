@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Items from "@/components/kanban/Items";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useParams } from "next/navigation";
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { KanbanBoardProps, User, Column as KanbanColumn } from "@/types/kanban";
 import { useKanban } from "@/hooks/useKanban";
+import { useSocket } from "@/hooks/useSocket";
 
 export default function KanbanBoard({
   columns: initialColumns,
@@ -33,6 +34,39 @@ export default function KanbanBoard({
     initialColumns,
     workspaceId
   );
+  const { on, off } = useSocket();
+
+  useEffect(() => {
+    // Socket event listeners
+    on("task:created", (data) => {
+      // Handle task creation
+    });
+
+    on("task:deleted", (data) => {
+      // Handle task deletion
+    });
+
+    on("task:updated", (data) => {
+      // Handle task update
+    });
+
+    on("column:reordered", (data) => {
+      // Handle column reorder
+    });
+
+    on("task:dragged", (data) => {
+      // Handle task drag
+    });
+
+    return () => {
+      // Cleanup socket listeners
+      off("task:created");
+      off("task:deleted");
+      off("task:updated");
+      off("column:reordered");
+      off("task:dragged");
+    };
+  }, [on, off]);
 
   const handleAddCard = () => {
     if (!activeColumn || !newCardTitle.trim()) return;

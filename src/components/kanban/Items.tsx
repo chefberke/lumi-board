@@ -13,14 +13,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CardProps } from "@/types/kanban";
+import { useSocket } from "@/hooks/useSocket";
 
 function Items({ card, index, user, onDelete }: CardProps) {
+  const { emit } = useSocket();
   const date = new Date(card.createdAt || "");
   const formattedDate = date.toLocaleDateString("en-GB");
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (onDelete) {
+      emit("task:delete", { id: card.id });
       onDelete(card.id);
     }
   };
