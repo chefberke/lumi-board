@@ -3,6 +3,7 @@ import { connect } from '@/lib/db';
 import Project from '@/models/Project';
 import jwt from 'jsonwebtoken';
 import { IProject } from '@/types/models';
+import mongoose from 'mongoose';
 
 export async function GET(req: NextRequest) {
     try {
@@ -18,12 +19,13 @@ export async function GET(req: NextRequest) {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
+        const userId = new mongoose.Types.ObjectId(decoded.userId);
 
         // Find workspaces where user is owner or member
         const workspaces = await Project.find({
             $or: [
-                { owner: decoded.userId },
-                { members: decoded.userId }
+                { owner: userId },
+                { members: userId }
             ]
         }).sort({ createdAt: -1 });
 

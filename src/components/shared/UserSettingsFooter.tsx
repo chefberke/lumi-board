@@ -86,15 +86,11 @@ function UserSettingsFooter() {
                     </DialogDescription>
                   </DialogHeader>
                   <div className="flex items-center justify-start gap-4">
-                    <Image
-                      src={
-                        "https://cdn.jsdelivr.net/gh/alohe/avatars/png/notion_1.png"
-                      }
-                      alt="user-image"
-                      className="rounded-full border-2 border-black"
-                      width={80}
-                      height={80}
-                    />
+                    <div className="w-20 h-20 rounded-full bg-lumi flex items-center justify-center">
+                      <span className="text-white text-2xl font-normal">
+                        {data?.user?.username.charAt(0)}
+                      </span>
+                    </div>
                     <div className="flex flex-col">
                       <div className="flex flex-col items-start justify-start pt-1">
                         <div className="text-neutral-500 text-sm">
