@@ -79,13 +79,11 @@ function Items({ card, index, user, onDelete }: CardProps) {
               <p className="text-neutral-700 text-sm dark:text-neutral-300">
                 {user.user.username}
               </p>
-              <Image
-                src="https://cdn.jsdelivr.net/gh/alohe/avatars/png/notion_1.png"
-                alt="user-image"
-                className="rounded-full border-2 border-neutral-700 dark:border-neutral-300"
-                width={25}
-                height={25}
-              />
+              <div className="w-5 h-5 rounded-full bg-lumi flex items-center justify-center">
+                <span className="text-white text-xs font-normal">
+                  {user.user.username.charAt(0)}
+                </span>
+              </div>
             </div>
           </div>
         </div>
