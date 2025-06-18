@@ -18,7 +18,28 @@ import { useSocket } from "@/hooks/useSocket";
 function Items({ card, index, user, onDelete }: CardProps) {
   const { emit } = useSocket();
   const date = new Date(card.createdAt || "");
-  const formattedDate = date.toLocaleDateString("en-GB");
+
+  const getRelativeTime = (date: Date) => {
+    const now = new Date();
+    const diffInMilliseconds = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMilliseconds / (1000 * 60));
+    const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
+    const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
+
+    if (diffInMinutes < 1) {
+      return "just now";
+    } else if (diffInMinutes < 60) {
+      return `${diffInMinutes} minute${diffInMinutes === 1 ? "" : "s"} ago`;
+    } else if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours === 1 ? "" : "s"} ago`;
+    } else if (diffInDays < 7) {
+      return `${diffInDays} day${diffInDays === 1 ? "" : "s"} ago`;
+    } else {
+      return date.toLocaleDateString("en-GB");
+    }
+  };
+
+  const formattedDate = getRelativeTime(date);
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -35,7 +56,7 @@ function Items({ card, index, user, onDelete }: CardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`dark:bg-neutral-800 dark:border-none mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
+          className={`dark:bg-neutral-900 dark:border-none mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
             snapshot.isDragging
               ? "shadow-lg ring-2 ring-primary opacity-100 backdrop-blur-md"
               : ""
