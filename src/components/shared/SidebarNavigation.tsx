@@ -61,8 +61,8 @@ export function SidebarNavigation() {
         <SidebarGroup>
           <Image
             src={theme === "dark" ? LogoDark : Logo}
-            width={80}
-            height={80}
+            width={75}
+            height={75}
             alt="Logo"
           />
         </SidebarGroup>

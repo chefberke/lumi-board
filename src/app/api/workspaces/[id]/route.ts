@@ -77,7 +77,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   try {
     await connect();
-    const { id } = params;
+    const { id } = await params;
     const { columns } = await req.json();
 
     const token = req.cookies.get('jwt')?.value;

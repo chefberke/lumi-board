@@ -14,6 +14,16 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  /* Hide scrollbar completely */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
   /* Custom scrollbar for non-mobile devices */
   @media (min-width: 768px) {
     .custom-scrollbar::-webkit-scrollbar {
