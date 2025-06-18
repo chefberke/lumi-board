@@ -35,7 +35,7 @@ function Items({ card, index, user, onDelete }: CardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`dark:bg-neutral-800 dark:border-none mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
+          className={`dark:bg-neutral-900 dark:border-none mb-2 p-3 bg-white rounded-md shadow-sm border-2 border-gray-100/50 hover:shadow-md hover:border-primary/20 transition-all cursor-grab active:cursor-grabbing w-full break-words ${
             snapshot.isDragging
               ? "shadow-lg ring-2 ring-primary opacity-100 backdrop-blur-md"
               : ""

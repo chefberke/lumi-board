@@ -82,6 +82,38 @@ export default function KanbanBoard({
     setIsDialogOpen(true);
   };
 
+  // Function to get color for column based on title
+  const getColumnColor = (title: string) => {
+    const lowerTitle = title.toLowerCase();
+
+    if (
+      lowerTitle.includes("todo") ||
+      lowerTitle.includes("backlog") ||
+      lowerTitle.includes("to do")
+    ) {
+      return "bg-red-600";
+    } else if (
+      lowerTitle.includes("progress") ||
+      lowerTitle.includes("doing") ||
+      lowerTitle.includes("in progress")
+    ) {
+      return "bg-yellow-600";
+    } else if (
+      lowerTitle.includes("done") ||
+      lowerTitle.includes("completed") ||
+      lowerTitle.includes("finished")
+    ) {
+      return "bg-lumi";
+    } else if (
+      lowerTitle.includes("review") ||
+      lowerTitle.includes("testing")
+    ) {
+      return "bg-blue-600";
+    } else {
+      return "bg-gray-600";
+    }
+  };
+
   if (!userData) return null;
 
   const user: User = {
@@ -115,14 +147,21 @@ export default function KanbanBoard({
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
-                      className="bg-gray-50/50 group dark:bg-neutral-900 border border-gray-100/30 dark:border-neutral-900 rounded-lg shadow-sm md:w-72 min-w-[300px] flex flex-col"
+                      className="bg-gray-50/50 group dark:bg-neutral-950 border border-gray-100/30 dark:border-neutral-900 rounded-2xl shadow-sm md:w-72 min-w-[300px] flex flex-col"
                     >
                       <div
                         {...provided.dragHandleProps}
                         className="px-4 py-2 cursor-grab active:cursor-grabbing flex-shrink-0"
                       >
                         <h3 className="pt-1.5 font-semibold text-gray-700 flex w-full justify-between dark:text-neutral-200">
-                          <span>{column.title}</span>
+                          <span className="flex items-center gap-2">
+                            <div
+                              className={`w-2.5 h-2.5 rounded-sm ${getColumnColor(
+                                column.title
+                              )}`}
+                            ></div>
+                            {column.title}
+                          </span>
                         </h3>
                         <div className="text-xs text-neutral-600 pt-1 dark:text-neutral-400">
                           {column.cards.length} tasks
