@@ -3,7 +3,7 @@ import { connect } from '@/lib/db';
 import Project from '@/models/Project';
 import jwt from 'jsonwebtoken';
 import { IProject } from '@/types/models';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
 export async function GET(req: NextRequest) {
     try {
@@ -33,8 +33,8 @@ export async function GET(req: NextRequest) {
             workspaces: workspaces.map(workspace => ({
                 _id: workspace._id,
                 title: workspace.title,
-                owner: workspace.owner,
-                members: workspace.members,
+                owner: workspace.owner.toString(),
+                members: workspace.members.map((member: Types.ObjectId) => member.toString()),
                 columns: workspace.columns,
                 createdAt: workspace.createdAt,
                 updatedAt: workspace.updatedAt

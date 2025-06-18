@@ -15,6 +15,10 @@ function WorkspacePage() {
   const { data, loading, error, fetchData } = useKanbanStore();
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
+  useEffect(() => {
+    document.title = `Lumi | Project | ${data?.workspace?.title}`;
+  }, [data?.workspace?.title]);
+
   const saveRecentWorkspace = (workspaceId: string, workspaceName: string) => {
     if (!workspaceId && !workspaceName) return;
 
@@ -89,10 +93,18 @@ function WorkspacePage() {
 
   if (loading) {
     return (
-      <div className="flex h-full gap-4">
-        <Skeleton className="w-[300px] h-full" />
-        <Skeleton className="w-[300px] h-full" />
-        <Skeleton className="w-[300px] h-full" />
+      <div className="flex flex-col h-full gap-4">
+        <div className="mb-4">
+          <h1 className="text-lg dark:text-white font-bold">Projects</h1>
+          <p className="dark:text-neutral-400 text-sm">
+            Track your team's work with this collaborative Kanban board.
+          </p>
+        </div>
+        <div className="flex gap-4">
+          <Skeleton className="w-[300px] h-full" />
+          <Skeleton className="w-[300px] h-full" />
+          <Skeleton className="w-[300px] h-full" />
+        </div>
       </div>
     );
   }
@@ -112,8 +124,16 @@ function WorkspacePage() {
   }
 
   return (
-    <div className="h-full">
-      <KanbanBoard columns={data.workspace.columns} />
+    <div className="h-full flex flex-col">
+      <div className="mb-4 flex-shrink-0">
+        <h1 className="text-lg dark:text-white font-bold">Projects</h1>
+        <p className="dark:text-neutral-400 text-sm">
+          Track your team's work with this collaborative Kanban board.
+        </p>
+      </div>
+      <div className="flex-1 min-h-0">
+        <KanbanBoard columns={data.workspace.columns} />
+      </div>
     </div>
   );
 }
