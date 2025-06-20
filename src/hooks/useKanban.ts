@@ -9,7 +9,7 @@ export const useKanban = (initialColumns: Column[], workspaceId: string) => {
   const [columns, setColumns] = useState(initialColumns || []);
   const [isSaving, setIsSaving] = useState(false);
   const saveChanges = useKanbanStore((state) => state.saveChanges);
-  const { emit, on, off } = useSocket();
+  const { emit, on, off } = useSocket(workspaceId);
 
   useEffect(() => {
     // Socket event listener'ları
@@ -167,14 +167,15 @@ export const useKanban = (initialColumns: Column[], workspaceId: string) => {
     }
   };
 
-  const addCard = (columnId: string, title: string) => {
+  const addCard = (columnId: string, title: string, description: string, assignee?: { id: string; username: string } | null) => {
     const newCardId = uuidv4();
     const currentDate = new Date();
 
     const newCard = {
       id: newCardId,
       title: title.trim(),
-      description: "",
+      description: description.trim() || undefined,
+      assignee: assignee ? { _id: assignee.id, username: assignee.username } : undefined,
       createdAt: currentDate,
       updatedAt: currentDate,
       order: columns.find(col => col.id === columnId)?.cards.length || 0,

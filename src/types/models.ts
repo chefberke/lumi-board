@@ -26,6 +26,7 @@ export interface IItem {
   order: number;
   columnId: Types.ObjectId;
   description?: string;
+  assignee?: Types.ObjectId;
   dueDate?: Date;
   createdAt: Date;
   updatedAt: Date;

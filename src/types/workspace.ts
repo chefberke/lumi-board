@@ -52,3 +52,23 @@ export interface InviteStore {
   acceptInvite: (inviteId: string) => Promise<void>;
   rejectInvite: (inviteId: string) => Promise<void>;
 }
+
+// Workspace Team Types
+export interface TeamMember {
+  id: string;
+  username: string;
+  role: 'owner' | 'member';
+}
+
+export interface WorkspaceTeamData {
+  workspaceId: string;
+  workspaceTitle: string;
+  team: TeamMember[];
+}
+
+export interface WorkspaceTeamState {
+  data?: WorkspaceTeamData | null;
+  loading?: boolean;
+  error?: string | null;
+  fetchData?: (workspaceId: string) => Promise<void>;
+}

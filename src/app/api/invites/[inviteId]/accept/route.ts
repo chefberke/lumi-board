@@ -74,8 +74,15 @@ export async function POST(
       workspace.members = [];
     }
 
-    workspace.members.push(decoded.userId);
-    await workspace.save();
+    // Check if user is already a member
+    const isAlreadyMember = workspace.members.some(
+      (memberId: any) => memberId.toString() === decoded.userId
+    );
+
+    if (!isAlreadyMember) {
+      workspace.members.push(decoded.userId);
+      await workspace.save();
+    }
 
     // Add workspace to user's projects
     const user = await User.findById(decoded.userId);
@@ -83,8 +90,16 @@ export async function POST(
       if (!user.projects) {
         user.projects = [];
       }
-      user.projects.push(workspace._id);
-      await user.save();
+
+      // Check if workspace is already in user's projects
+      const hasProject = user.projects.some(
+        (projectId: any) => projectId.toString() === workspace._id.toString()
+      );
+
+      if (!hasProject) {
+        user.projects.push(workspace._id);
+        await user.save();
+      }
     }
 
     return NextResponse.json({

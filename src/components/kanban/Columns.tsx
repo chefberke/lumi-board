@@ -15,10 +15,10 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { KanbanBoardProps, User, Column as KanbanColumn } from "@/types/kanban";
 import { useKanban } from "@/hooks/useKanban";
 import { useSocket } from "@/hooks/useSocket";
+import { AssignUser } from "@/components/shared/AssignUser";
 
 export default function KanbanBoard({
   columns: initialColumns,
@@ -27,7 +27,12 @@ export default function KanbanBoard({
   const workspaceId = params.id as string;
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newCardTitle, setNewCardTitle] = useState("");
+  const [newCardDescription, setNewCardDescription] = useState("");
   const [activeColumn, setActiveColumn] = useState<KanbanColumn | null>(null);
+  const [selectedAssignee, setSelectedAssignee] = useState<{
+    id: string;
+    username: string;
+  } | null>(null);
 
   const { data: userData } = getMe();
   const { columns, isSaving, handleDragEnd, addCard, deleteCard } = useKanban(
@@ -70,10 +75,17 @@ export default function KanbanBoard({
 
   const handleAddCard = () => {
     if (!activeColumn || !newCardTitle.trim()) return;
-    addCard(activeColumn.id, newCardTitle);
+    addCard(
+      activeColumn.id,
+      newCardTitle,
+      newCardDescription,
+      selectedAssignee
+    );
     setIsDialogOpen(false);
     setNewCardTitle("");
+    setNewCardDescription("");
     setActiveColumn(null);
+    setSelectedAssignee(null);
   };
 
   const openAddCardDialog = (column: KanbanColumn, e: React.MouseEvent) => {
@@ -121,6 +133,8 @@ export default function KanbanBoard({
       username: userData.user.username,
     },
   };
+
+  console.log(columns);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -228,45 +242,54 @@ export default function KanbanBoard({
       </div>
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+        <DialogContent className="w-[650px] max-w-full h-[250px] bg-neutral-950 border-neutral-800 dark:border-neutral-900">
           <DialogHeader>
-            <DialogTitle>Add a new task</DialogTitle>
-            <DialogDescription>
-              {activeColumn
-                ? `Add a new task to the "${activeColumn.title}" column.`
-                : "Add a new task."}
-            </DialogDescription>
+            <DialogTitle className="text-sm text-neutral-400 flex items-center gap-2">
+              <span className="w-2 h-2 bg-lumi rounded-full"></span>
+              LUMI
+              <span className="text-neutral-600">&gt;</span>
+              {activeColumn && activeColumn.title}
+              <span className="text-neutral-600">&gt;</span>
+              New issue
+            </DialogTitle>
           </DialogHeader>
 
-          <div className="grid gap-4">
-            <div className="grid gap-2">
-              <Input
+          <div className="flex flex-col gap-4 flex-1">
+            <div>
+              <input
                 id="title"
+                type="text"
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
-                placeholder="Task title"
-                className="w-full"
+                placeholder="Issue title"
+                className="w-full bg-transparent border-none outline-none focus:outline-none placeholder:text-lg placeholder:text-neutral-500 text-lg text-neutral-100 font-medium"
+              />
+            </div>
+
+            <div>
+              <textarea
+                value={newCardDescription}
+                onChange={(e) => setNewCardDescription(e.target.value)}
+                placeholder="Add description..."
+                className="w-full h-8 bg-transparent border-none outline-none focus:outline-none placeholder:text-neutral-500 text-neutral-100 resize-none"
               />
             </div>
           </div>
 
-          <DialogFooter>
-            <Button
-              variant="outline"
-              size={"sm"}
-              onClick={() => setIsDialogOpen(false)}
-            >
-              Cancel
-            </Button>
+          <div className="flex items-center gap-4 justify-end pt-2 border-t border-neutral-800">
+            <div>
+              <AssignUser
+                value={selectedAssignee?.id || undefined}
+                onValueChange={setSelectedAssignee}
+              />
+            </div>
             <Button
               onClick={handleAddCard}
-              variant="default"
-              size={"sm"}
-              className="bg-lumi"
+              className="bg-lumi hover:bg-lumi/90 text-white px-3 py-1 text-sm"
             >
-              Add
+              Create issue
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </DragDropContext>

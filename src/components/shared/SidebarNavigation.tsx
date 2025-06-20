@@ -3,6 +3,7 @@
 import { Calendar, Home, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import {
   Sidebar,
@@ -20,7 +21,7 @@ import Logo from "@/assets/logo.svg";
 import LogoDark from "@/assets/logo_dark.svg";
 import UserSettingsFooter from "@/components/shared/UserSettingsFooter";
 import WorkspaceList from "@/components/shared/WorkspaceList";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 // Menu items.
 const items = [
@@ -46,13 +47,11 @@ const items = [
 
 export function SidebarNavigation() {
   const pathname = usePathname();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark" || storedTheme === "light") {
-      setTheme(storedTheme);
-    }
+    setMounted(true);
   }, []);
 
   return (
@@ -60,7 +59,7 @@ export function SidebarNavigation() {
       <SidebarContent>
         <SidebarGroup>
           <Image
-            src={theme === "dark" ? LogoDark : Logo}
+            src={mounted && resolvedTheme === "dark" ? LogoDark : Logo}
             width={75}
             height={75}
             alt="Logo"

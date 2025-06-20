@@ -1,8 +1,12 @@
 import { IItem, IColumn, IUser } from './models';
 
-export interface Card extends Omit<IItem, '_id' | 'columnId'> {
+export interface Card extends Omit<IItem, '_id' | 'columnId' | 'assignee'> {
   id: string;
   columnId?: string;
+  assignee?: {
+    _id: string;
+    username: string;
+  };
 }
 
 export interface Column extends Omit<IColumn, '_id' | 'projectId' | 'items'> {

@@ -44,8 +44,19 @@ function Page() {
     }
 
     try {
-      await signUp(validationResult.data);
-      router.push("/sign-in");
+      const response = await signUp(validationResult.data);
+      // Set user data in localStorage after successful signup
+      if (response.user) {
+        const userData = {
+          id: response.user._id,
+          email: response.user.email,
+          name: response.user.username,
+        };
+        // Import setUser function
+        const { setUser } = await import("@/lib/authClient");
+        setUser(userData);
+      }
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

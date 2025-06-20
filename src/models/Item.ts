@@ -25,6 +25,10 @@ const itemSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    assignee: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     dueDate: {
       type: Date,
     },

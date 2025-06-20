@@ -68,7 +68,7 @@ function Items({ card, index, user, onDelete }: CardProps) {
           }}
         >
           <div className="flex justify-between items-start mb-1 group">
-            <h4 className="font-medium text-gray-800 text-sm md:text-base dark:text-neutral-300">
+            <h4 className="font-medium text-gray-800 text-sm md:text-base dark:text-neutral-300 flex-1 mr-2 line-clamp-2 break-words">
               {card.title}
             </h4>
             {onDelete && (
@@ -91,20 +91,35 @@ function Items({ card, index, user, onDelete }: CardProps) {
             )}
           </div>
 
-          <p className="text-xs md:text-sm text-gray-600">{card.description}</p>
+          <p className="text-xs md:text-sm text-gray-600 dark:text-neutral-300 line-clamp-3 break-words">
+            {card.description}
+          </p>
           <div className="flex justify-between w-full items-center pt-1 gap-2">
             <p className="text-neutral-600 text-xs font-normal dark:text-neutral-400">
               {formattedDate}
             </p>
             <div className="flex items-center gap-1.5">
-              <p className="text-neutral-700 text-sm dark:text-neutral-300">
-                {user.user.username}
-              </p>
-              <div className="w-5 h-5 rounded-full bg-lumi flex items-center justify-center">
-                <span className="text-white text-xs font-normal">
-                  {user.user.username.charAt(0)}
-                </span>
-              </div>
+              {card.assignee ? (
+                <>
+                  <p className="text-neutral-700 text-sm dark:text-neutral-300">
+                    {card.assignee.username}
+                  </p>
+                  <div className="w-5 h-5 rounded-full bg-lumi flex items-center justify-center">
+                    <span className="text-white text-xs font-normal">
+                      {card.assignee.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-neutral-700 text-sm dark:text-neutral-300">
+                    Unassigned
+                  </p>
+                  <div className="w-5 h-5 rounded-full bg-gray-400 dark:bg-neutral-800 flex items-center justify-center">
+                    <span className="text-white text-xs font-normal">?</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
