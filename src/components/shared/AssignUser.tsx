@@ -14,7 +14,12 @@ import { Users, Loader2 } from "lucide-react";
 import { useEffect, useId } from "react";
 import { useParams } from "next/navigation";
 
-function AssignUser() {
+interface AssignUserProps {
+  onValueChange?: (assignee: { id: string; username: string } | null) => void;
+  value?: string;
+}
+
+function AssignUser({ onValueChange, value }: AssignUserProps) {
   const id = useId();
   const params = useParams();
   const workspaceId = params.id as string;
@@ -27,9 +32,30 @@ function AssignUser() {
     }
   }, [workspaceId, fetchData]);
 
+  const handleValueChange = (selectedValue: string) => {
+    if (selectedValue === "none") {
+      onValueChange?.(null);
+    } else {
+      // Find the selected user's data
+      const selectedUser = data?.team?.find(
+        (member) => member.id === selectedValue
+      );
+      if (selectedUser) {
+        onValueChange?.({
+          id: selectedUser.id,
+          username: selectedUser.username,
+        });
+      }
+    }
+  };
+
   return (
     <div className="space-y-2 min-w-[100px]">
-      <Select defaultValue="none">
+      <Select
+        defaultValue="none"
+        value={value || "none"}
+        onValueChange={handleValueChange}
+      >
         <SelectTrigger
           id={id}
           className="ps-2 [&>span]:flex [&>span]:items-center [&>span]:gap-2 [&>span_img]:shrink-0 [&>svg]:hidden"

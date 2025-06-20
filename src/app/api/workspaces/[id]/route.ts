@@ -3,6 +3,7 @@ import type { NextRequest } from 'next/server';
 import Project from '@/models/Project';
 import Column from '@/models/Column';
 import Item from '@/models/Item';
+import User from '@/models/User';
 import { connect } from '@/lib/db';
 import jwt from 'jsonwebtoken';
 import { IProject, IColumn, IItem } from '@/types/models';
@@ -47,6 +48,23 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const columnIds = columns.map(col => col._id);
     const items = (await Item.find({ columnId: { $in: columnIds } }).lean() as unknown) as IItem[];
 
+    // Get unique assignee IDs
+    const assigneeIds = items
+      .map(item => item.assignee)
+      .filter(assigneeId => assigneeId !== null && assigneeId !== undefined)
+      .filter((id, index, self) => self.indexOf(id) === index);
+
+    // Get assignee details
+    const assignees = assigneeIds.length > 0
+      ? await User.find({ _id: { $in: assigneeIds } }, 'username').lean()
+      : [];
+
+    // Create assignee lookup map
+    const assigneeMap = new Map();
+    assignees.forEach((assignee: any) => {
+      assigneeMap.set(assignee._id.toString(), assignee);
+    });
+
     // Group items by column
     const columnsWithCards = columns.map(column => {
       const columnItems = items.filter(item =>
@@ -60,6 +78,11 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
           id: item._id,
           title: item.title,
           description: item.description || '',
+          assignee: item.assignee ? {
+            _id: item.assignee.toString(),
+            username: assigneeMap.get(item.assignee.toString())?.username || 'Unknown'
+          } : undefined,
+          dueDate: item.dueDate,
           createdAt: item.createdAt,
         }))
       };
@@ -140,21 +163,27 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
         const card = column.cards[j];
         // Eğer kart mevcutsa güncelle, yoksa yeni oluştur
         if (card.id && mongoose.Types.ObjectId.isValid(card.id) && await Item.findById(card.id)) {
+          const assigneeId = card.assignee ? (card.assignee._id || card.assignee.id) : null;
           await Item.findByIdAndUpdate(card.id, {
             columnId: column.id,
             order: j,
             title: card.title,
-            description: card.description || ''
+            description: card.description || '',
+            assignee: assigneeId ? new mongoose.Types.ObjectId(assigneeId) : null,
+            dueDate: card.dueDate
           });
           updatedCardIds.add(card.id.toString());
         } else {
           // Yeni kart oluştur
+          const assigneeId = card.assignee ? (card.assignee._id || card.assignee.id) : null;
           const newItem = await Item.create({
             _id: mongoose.Types.ObjectId.isValid(card.id) ? card.id : new mongoose.Types.ObjectId(),
             title: card.title,
             order: j,
             columnId: card.columnId ? (typeof card.columnId === "string" ? new mongoose.Types.ObjectId(card.columnId) : card.columnId) : column.id,
             description: card.description || '',
+            assignee: assigneeId ? new mongoose.Types.ObjectId(assigneeId) : null,
+            dueDate: card.dueDate,
             createdAt: card.createdAt || new Date()
           });
           updatedCardIds.add(newItem._id.toString());

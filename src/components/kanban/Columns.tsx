@@ -29,6 +29,10 @@ export default function KanbanBoard({
   const [newCardTitle, setNewCardTitle] = useState("");
   const [newCardDescription, setNewCardDescription] = useState("");
   const [activeColumn, setActiveColumn] = useState<KanbanColumn | null>(null);
+  const [selectedAssignee, setSelectedAssignee] = useState<{
+    id: string;
+    username: string;
+  } | null>(null);
 
   const { data: userData } = getMe();
   const { columns, isSaving, handleDragEnd, addCard, deleteCard } = useKanban(
@@ -71,11 +75,17 @@ export default function KanbanBoard({
 
   const handleAddCard = () => {
     if (!activeColumn || !newCardTitle.trim()) return;
-    addCard(activeColumn.id, newCardTitle, newCardDescription);
+    addCard(
+      activeColumn.id,
+      newCardTitle,
+      newCardDescription,
+      selectedAssignee
+    );
     setIsDialogOpen(false);
     setNewCardTitle("");
     setNewCardDescription("");
     setActiveColumn(null);
+    setSelectedAssignee(null);
   };
 
   const openAddCardDialog = (column: KanbanColumn, e: React.MouseEvent) => {
@@ -123,6 +133,8 @@ export default function KanbanBoard({
       username: userData.user.username,
     },
   };
+
+  console.log(columns);
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -266,7 +278,10 @@ export default function KanbanBoard({
 
           <div className="flex items-center gap-4 justify-end pt-2 border-t border-neutral-800">
             <div>
-              <AssignUser />
+              <AssignUser
+                value={selectedAssignee?.id || undefined}
+                onValueChange={setSelectedAssignee}
+              />
             </div>
             <Button
               onClick={handleAddCard}

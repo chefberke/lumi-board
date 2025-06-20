@@ -99,14 +99,27 @@ function Items({ card, index, user, onDelete }: CardProps) {
               {formattedDate}
             </p>
             <div className="flex items-center gap-1.5">
-              <p className="text-neutral-700 text-sm dark:text-neutral-300">
-                {user.user.username}
-              </p>
-              <div className="w-5 h-5 rounded-full bg-lumi flex items-center justify-center">
-                <span className="text-white text-xs font-normal">
-                  {user.user.username.charAt(0)}
-                </span>
-              </div>
+              {card.assignee ? (
+                <>
+                  <p className="text-neutral-700 text-sm dark:text-neutral-300">
+                    {card.assignee.username}
+                  </p>
+                  <div className="w-5 h-5 rounded-full bg-lumi flex items-center justify-center">
+                    <span className="text-white text-xs font-normal">
+                      {card.assignee.username.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-neutral-700 text-sm dark:text-neutral-300">
+                    Unassigned
+                  </p>
+                  <div className="w-5 h-5 rounded-full bg-gray-400 dark:bg-neutral-800 flex items-center justify-center">
+                    <span className="text-white text-xs font-normal">?</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
