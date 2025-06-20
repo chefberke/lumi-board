@@ -175,7 +175,7 @@ export const useKanban = (initialColumns: Column[], workspaceId: string) => {
       id: newCardId,
       title: title.trim(),
       description: description.trim() || undefined,
-      assignee: assignee ? { _id: assignee.id, id: assignee.id, username: assignee.username } : undefined,
+      assignee: assignee ? { _id: assignee.id, username: assignee.username } : undefined,
       createdAt: currentDate,
       updatedAt: currentDate,
       order: columns.find(col => col.id === columnId)?.cards.length || 0,

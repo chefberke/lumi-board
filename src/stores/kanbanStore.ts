@@ -32,6 +32,10 @@ export const useKanbanStore = create<WorkspaceState>((set) => ({
           id: card.id,
           title: card.title,
           description: card.description || "",
+          assignee: card.assignee ? {
+            _id: card.assignee._id,
+            username: card.assignee.username
+          } : undefined,
           order: index,
           columnId: card.columnId || column.id,
           createdAt: card.createdAt || new Date().toISOString(),
