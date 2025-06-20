@@ -9,7 +9,7 @@ export const useKanban = (initialColumns: Column[], workspaceId: string) => {
   const [columns, setColumns] = useState(initialColumns || []);
   const [isSaving, setIsSaving] = useState(false);
   const saveChanges = useKanbanStore((state) => state.saveChanges);
-  const { emit, on, off } = useSocket();
+  const { emit, on, off } = useSocket(workspaceId);
 
   useEffect(() => {
     // Socket event listener'ları
