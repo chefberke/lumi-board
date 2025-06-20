@@ -20,7 +20,7 @@ import Logo from "@/assets/logo.svg";
 import LogoDark from "@/assets/logo_dark.svg";
 import UserSettingsFooter from "@/components/shared/UserSettingsFooter";
 import WorkspaceList from "@/components/shared/WorkspaceList";
-import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 // Menu items.
 const items = [
@@ -46,21 +46,14 @@ const items = [
 
 export function SidebarNavigation() {
   const pathname = usePathname();
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark" || storedTheme === "light") {
-      setTheme(storedTheme);
-    }
-  }, []);
+  const { resolvedTheme } = useTheme();
 
   return (
     <Sidebar className="p-4 border-r-neutral-800">
       <SidebarContent>
         <SidebarGroup>
           <Image
-            src={theme === "dark" ? LogoDark : Logo}
+            src={resolvedTheme === "dark" ? LogoDark : Logo}
             width={75}
             height={75}
             alt="Logo"

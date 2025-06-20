@@ -9,17 +9,6 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { usePathname, useSearchParams } from "next/navigation";
 
-function ThemeInitializer() {
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  return null;
-}
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -35,7 +24,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider>
-      <ThemeInitializer />
       <SidebarNavigation />
       <main className="h-screen overflow-hidden flex flex-col w-full dark:bg-neutral-950">
         <SidebarTrigger />
