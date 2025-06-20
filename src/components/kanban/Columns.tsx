@@ -71,7 +71,7 @@ export default function KanbanBoard({
 
   const handleAddCard = () => {
     if (!activeColumn || !newCardTitle.trim()) return;
-    addCard(activeColumn.id, newCardTitle);
+    addCard(activeColumn.id, newCardTitle, newCardDescription);
     setIsDialogOpen(false);
     setNewCardTitle("");
     setNewCardDescription("");
