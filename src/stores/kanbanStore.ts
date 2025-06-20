@@ -9,7 +9,7 @@ export const useKanbanStore = create<WorkspaceState>((set) => ({
   loading: false,
   error: null,
 
-  fetchData: async (workspaceId: string) => {
+  fetchData: async (workspaceId?: string) => {
     if (!workspaceId) return;
 
     set({ loading: true, error: null });

@@ -46,7 +46,11 @@ function SignIn() {
 
     try {
       const response = await signIn(validationResult.data);
-      setUser({ email: validationResult.data.email, id: response.user._id });
+      setUser({
+        email: response.user.email,
+        id: response.user._id,
+        name: response.user.username,
+      });
       router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {

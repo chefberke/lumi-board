@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
                 user: {
                     _id: user._id,
                     email: user.email,
+                    username: user.username
                 }
             },
             { status: 200 }

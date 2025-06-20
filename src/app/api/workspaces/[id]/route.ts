@@ -29,6 +29,17 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       return NextResponse.json({ error: 'Workspace not found' }, { status: 404 });
     }
 
+        // Check if user has access to this workspace (owner or member)
+    const isOwner = project.owner.toString() === decoded.userId;
+    const isMember = project.members?.some((memberId: any) => memberId.toString() === decoded.userId);
+
+    if (!isOwner && !isMember) {
+      return NextResponse.json(
+        { error: 'Access denied - You are not a member of this workspace' },
+        { status: 403 }
+      );
+    }
+
     // Find all columns for this project
     const columns = (await Column.find({ projectId: id }).sort({ order: 1 }).lean() as unknown) as IColumn[];
 
@@ -94,6 +105,17 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     const project = await Project.findById(id);
     if (!project) {
       return NextResponse.json({ error: 'Workspace not found' }, { status: 404 });
+    }
+
+        // Check if user has access to this workspace (owner or member)
+    const isOwner = project.owner.toString() === decoded.userId;
+    const isMember = project.members?.some((memberId: any) => memberId.toString() === decoded.userId);
+
+    if (!isOwner && !isMember) {
+      return NextResponse.json(
+        { error: 'Access denied - You are not a member of this workspace' },
+        { status: 403 }
+      );
     }
 
     // Mevcut tüm kolonları ve kartları al
