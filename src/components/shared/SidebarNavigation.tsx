@@ -3,6 +3,7 @@
 import { Calendar, Home, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import {
   Sidebar,
@@ -47,13 +48,18 @@ const items = [
 export function SidebarNavigation() {
   const pathname = usePathname();
   const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Sidebar className="p-4 border-r-neutral-800">
       <SidebarContent>
         <SidebarGroup>
           <Image
-            src={resolvedTheme === "dark" ? LogoDark : Logo}
+            src={mounted && resolvedTheme === "dark" ? LogoDark : Logo}
             width={75}
             height={75}
             alt="Logo"

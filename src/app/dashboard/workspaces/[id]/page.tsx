@@ -91,7 +91,7 @@ function WorkspacePage() {
     }
   }, [data, router]);
 
-  if (loading) {
+  if (loading || !data?.workspace || !isAuthorized) {
     return (
       <div className="flex flex-col h-full gap-4">
         <div className="mb-4">
@@ -100,25 +100,11 @@ function WorkspacePage() {
             Track your team's work with this collaborative Kanban board.
           </p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 h-full">
           <Skeleton className="w-[300px] h-full" />
-          <Skeleton className="w-[300px] h-full" />
-          <Skeleton className="w-[300px] h-full" />
+          <Skeleton className="w-[300px] h-[350px]" />
+          <Skeleton className="w-[300px] h-[480px]" />
         </div>
-      </div>
-    );
-  }
-
-  if (!data?.workspace || !isAuthorized) {
-    return (
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4 dark:text-white">
-          Workspace not found
-        </h1>
-        <p className="dark:text-neutral-400">
-          The requested workspace could not be found or you don't have access to
-          it.
-        </p>
       </div>
     );
   }
