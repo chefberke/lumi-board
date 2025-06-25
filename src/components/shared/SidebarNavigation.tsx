@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Home, Inbox } from "lucide-react";
+import { ChartArea, Inbox } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -26,21 +26,15 @@ import { useTheme } from "next-themes";
 // Menu items.
 const items = [
   {
-    title: "Home",
+    title: "Dashboard",
     url: "/dashboard",
-    icon: Home,
+    icon: ChartArea,
     live: true,
   },
   {
     title: "Inbox",
     url: "/dashboard/inbox",
     icon: Inbox,
-    live: true,
-  },
-  {
-    title: "Calendar",
-    url: "/dashboard/calendar",
-    icon: Calendar,
     live: true,
   },
 ];

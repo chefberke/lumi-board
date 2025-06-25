@@ -1,11 +1,18 @@
-import React from "react";
+"use client";
+
+import DashboardCard from "@/components/shared/DashboardCard";
+import DashboardWelcomer from "@/components/shared/DashboardWelcomer";
+import React, { useEffect } from "react";
 
 function Dashboard() {
+  useEffect(() => {
+    document.title = "Lumi | Dashboard";
+  }, []);
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Home</h1>
-
-      <div className="w-full relative pb-8">deneme</div>
+      <DashboardWelcomer />
+      <DashboardCard />
     </div>
   );
 }

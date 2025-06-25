@@ -8,6 +8,10 @@ import { formatDistanceToNow } from "date-fns";
 import { useToast } from "@/hooks/use-toast";
 
 export default function InboxPage() {
+  useEffect(() => {
+    document.title = "Lumi | Inbox";
+  }, []);
+
   const {
     invites,
     isLoading,

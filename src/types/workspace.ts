@@ -25,6 +25,7 @@ export interface WorkspaceState {
 export interface UserState {
   data: {
     user: {
+      _id: string;
       username: string;
       email: string;
     };
