@@ -243,14 +243,14 @@ function Card({
                 {title}
               </h3>
               <div
-                className={`group-hover:scale-110 transition-transform duration-300`}
+                className={`group-hover:scale-110 transition-transform duration-300 text-[#706af8]`}
               >
                 {icon}
               </div>
             </div>
 
             <div className="flex items-baseline">
-              <span className="text-2xl font-semibold text-white group-hover:text-gray-100 transition-colors">
+              <span className="text-xl font-semibold text-white group-hover:text-gray-100 transition-colors">
                 {count}
               </span>
             </div>
